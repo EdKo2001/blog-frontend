@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import axios from "axios";
+import axios from "utils/axios";
 
 import IPost from "types/Post.interface";
 

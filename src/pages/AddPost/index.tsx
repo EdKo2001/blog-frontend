@@ -13,7 +13,7 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
-import axios from "axios";
+import axios from "utils/axios";
 
 import { useAppSelector } from "app/hooks";
 

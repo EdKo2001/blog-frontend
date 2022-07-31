@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
-import axios from "axios";
+import axios from "utils/axios";
 
 import Post from "components/Post";
 import AddComment from "components/AddComment";
