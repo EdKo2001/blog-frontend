@@ -1,3 +1,3 @@
 FIX:
 https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
-Module not found: Error: Can't resolve '@app/store' in 'D:\Full Stack Developer\CHEAT SHEETS\mern-blog\client\src'
+error page

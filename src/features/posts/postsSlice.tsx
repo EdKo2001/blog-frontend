@@ -20,7 +20,7 @@ export const fetchTags = createAsyncThunk(
   "posts/fetchTags",
   async (_, thunkAPI: any) => {
     try {
-      const { data } = await axios.get("/tags");
+      const { data } = await axios.get("/posts/tags");
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
