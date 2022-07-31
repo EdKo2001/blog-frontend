@@ -1,9 +1,13 @@
-import React from "react";
-import styles from "./SideBlock.module.scss";
+import React, { FC } from "react";
+
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
-export const SideBlock = ({ title, children }) => {
+import ISideBlock from "types/SideBlock.interface";
+
+import styles from "./SideBlock.module.scss";
+
+const SideBlock: FC<ISideBlock> = ({ title, children }) => {
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography variant="h6" classes={{ root: styles.title }}>
@@ -13,3 +17,5 @@ export const SideBlock = ({ title, children }) => {
     </Paper>
   );
 };
+
+export default SideBlock;

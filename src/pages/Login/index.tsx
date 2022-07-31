@@ -1,19 +1,22 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+
+import { useForm } from "react-hook-form";
 
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import { useForm } from "react-hook-form";
+
+import { useAppSelector, useThunkDispatch } from "app/hooks";
+
+import { fetchAuth, selectIsAuth } from "features/auth/authSlice";
 
 import styles from "./Login.module.scss";
-import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 
-export const Login = () => {
-  const isAuth = useSelector(selectIsAuth);
-  const dispatch = useDispatch();
+const Login = () => {
+  const isAuth = useAppSelector(selectIsAuth);
+  const dispatch = useThunkDispatch();
   const {
     register,
     handleSubmit,
@@ -26,7 +29,7 @@ export const Login = () => {
     mode: "onChange",
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: any) => {
     const data = await dispatch(fetchAuth(values));
 
     if (!data.payload) {
@@ -78,3 +81,5 @@ export const Login = () => {
     </Paper>
   );
 };
+
+export default Login;

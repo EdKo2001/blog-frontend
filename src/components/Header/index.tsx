@@ -1,20 +1,23 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import styles from './Header.module.scss';
-import Container from '@mui/material/Container';
-import { logout, selectIsAuth } from '../../redux/slices/auth';
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 
-export const Header = () => {
-  const dispatch = useDispatch();
-  const isAuth = useSelector(selectIsAuth);
+import { useAppSelector, useThunkDispatch } from "app/hooks";
+
+import { logout, selectIsAuth } from "features/auth/authSlice";
+
+import styles from "./Header.module.scss";
+
+const Header = () => {
+  const dispatch = useThunkDispatch();
+  const isAuth = useAppSelector(selectIsAuth);
 
   const onClickLogout = () => {
-    if (window.confirm('Вы действительно хотите выйти?')) {
+    if (window.confirm("Вы действительно хотите выйти?")) {
       dispatch(logout());
-      window.localStorage.removeItem('token');
+      window.localStorage.removeItem("token");
     }
   };
 
@@ -31,7 +34,11 @@ export const Header = () => {
                 <Link to="/add-post">
                   <Button variant="contained">Написать статью</Button>
                 </Link>
-                <Button onClick={onClickLogout} variant="contained" color="error">
+                <Button
+                  onClick={onClickLogout}
+                  variant="contained"
+                  color="error"
+                >
                   Выйти
                 </Button>
               </>
@@ -51,3 +58,5 @@ export const Header = () => {
     </div>
   );
 };
+
+export default Header;

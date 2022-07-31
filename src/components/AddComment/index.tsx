@@ -1,12 +1,12 @@
 import React from "react";
 
-import styles from "./AddComment.module.scss";
-
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 
-export const Index = () => {
+import styles from "./AddComment.module.scss";
+
+const Index = () => {
   return (
     <>
       <div className={styles.root}>
@@ -28,3 +28,5 @@ export const Index = () => {
     </>
   );
 };
+
+export default Index;

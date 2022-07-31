@@ -1,19 +1,26 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
+
 import clsx from "clsx";
+
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import EyeIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 
-import styles from "./Post.module.scss";
-import { UserInfo } from "../UserInfo";
-import { PostSkeleton } from "./Skeleton";
-import { fetchRemovePost } from "../../redux/slices/posts";
+import UserInfo from "../UserInfo";
+import PostSkeleton from "./PostSkeleton";
 
-export const Post = ({
+import { useThunkDispatch } from "app/hooks";
+
+import { fetchRemovePost } from "features/posts/postsSlice";
+
+import IPost from "types/Post.interface";
+
+import styles from "./Post.module.scss";
+
+const Post: FC<IPost> = ({
   id,
   title,
   createdAt,
@@ -27,14 +34,15 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
+
   if (isLoading) {
     return <PostSkeleton />;
   }
 
   const onClickRemove = () => {
     if (window.confirm("Вы действительно хотите удалить статью?")) {
-      dispatch(fetchRemovePost(id));
+      dispatch(fetchRemovePost(id as number));
     }
   };
 
@@ -60,20 +68,22 @@ export const Post = ({
         />
       )}
       <div className={styles.wrapper}>
-        <UserInfo {...user} additionalText={createdAt} />
+        <UserInfo {...user} additionalText={createdAt!} />
         <div className={styles.indention}>
           <h2
             className={clsx(styles.title, { [styles.titleFull]: isFullPost })}
           >
             {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
           </h2>
-          <ul className={styles.tags}>
-            {tags.map((name) => (
-              <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
-              </li>
-            ))}
-          </ul>
+          {tags && tags.length > 0 && (
+            <ul className={styles.tags}>
+              {tags.map((name) => (
+                <li key={name}>
+                  <Link to={`/tag/${name}`}>#{name}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
           {children && <div className={styles.content}>{children}</div>}
           <ul className={styles.postDetails}>
             <li>
@@ -90,3 +100,5 @@ export const Post = ({
     </div>
   );
 };
+
+export default Post;
