@@ -1,7 +1,7 @@
 interface IUserInfo {
   avatarUrl?: string;
   fullName?: string;
-  additionalText: string;
+  postedOn: string;
 }
 
 export default IUserInfo;

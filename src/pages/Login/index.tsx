@@ -1,6 +1,6 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import Typography from "@mui/material/Typography";
@@ -10,34 +10,40 @@ import Button from "@mui/material/Button";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
-import { fetchAuth, selectIsAuth } from "features/auth/authSlice";
+import {
+  selectAuthErrors,
+  fetchAuth,
+  selectIsAuth,
+} from "features/auth/authSlice";
 
 import styles from "./Login.module.scss";
 
 const Login = () => {
   const isAuth = useAppSelector(selectIsAuth);
+  const authErrors = useAppSelector(selectAuthErrors);
   const dispatch = useThunkDispatch();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm({
-    defaultValues: {
-      email: "test@test.ru",
-      password: "123",
-    },
     mode: "onChange",
   });
 
   const onSubmit = async (values: any) => {
-    const data = await dispatch(fetchAuth(values));
+    try {
+      const data = await dispatch(fetchAuth(values));
 
-    if (!data.payload) {
-      return alert("Не удалось авторизоваться!");
-    }
+      if (!data.payload) {
+        return alert("Failed to login!");
+      }
 
-    if ("token" in data.payload) {
-      window.localStorage.setItem("token", data.payload.token);
+      if ("token" in data.payload) {
+        window.localStorage.setItem("token", data.payload.token);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -48,24 +54,24 @@ const Login = () => {
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
-        Вход в аккаунт
+        Sign In
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           className={styles.field}
-          label="E-Mail"
-          error={Boolean(errors.email?.message)}
-          helperText={errors.email?.message}
+          label="Email"
+          error={Boolean(authErrors?.email)}
+          helperText={authErrors?.email}
           type="email"
-          {...register("email", { required: "Укажите почту" })}
+          {...register("email", { required: "Email is required" })}
           fullWidth
         />
         <TextField
           className={styles.field}
-          label="Пароль"
-          error={Boolean(errors.password?.message)}
-          helperText={errors.password?.message}
-          {...register("password", { required: "Укажите пароль" })}
+          label="Password"
+          error={Boolean(authErrors?.password)}
+          helperText={authErrors?.password}
+          {...register("password", { required: "Password is required" })}
           fullWidth
         />
         <Button
@@ -75,7 +81,7 @@ const Login = () => {
           variant="contained"
           fullWidth
         >
-          Войти
+          Sign In
         </Button>
       </form>
     </Paper>

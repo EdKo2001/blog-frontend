@@ -9,12 +9,22 @@ import Post from "components/Post";
 import AddComment from "components/AddComment";
 import CommentsBlock from "components/CommentsBlock";
 
+import { useAppSelector } from "app/hooks";
+import { selectIsAuth } from "features/auth/authSlice";
+
 import IPost from "types/Post.interface";
 
 const FullPost: FC<IPost> = () => {
   const [data, setData] = useState<any>();
+  const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [isCommentsLoading, setCommentsLoading] = useState(true);
+  const [commentsCallback, setCommentsCallback] = useState(true);
+  const [likesCallback, setLikesCallback] = useState(true);
   const { id } = useParams();
+  const isAuth = useAppSelector(selectIsAuth);
+  const userData = useAppSelector((state) => state.auth.data);
 
   useEffect(() => {
     axios
@@ -28,6 +38,31 @@ const FullPost: FC<IPost> = () => {
         alert("Ошибка при получении статьи");
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`/posts/${id}/comments`)
+      .then((res: any) => {
+        setComments(res.data);
+        setCommentsLoading(false);
+      })
+      .catch((err: Error) => {
+        console.warn(err);
+        alert("Ошибка при получении Комментарий");
+      });
+  }, [commentsCallback]);
+
+  useEffect(() => {
+    axios
+      .get(`/posts/${id}/likes`)
+      .then((res: any) => {
+        setLikes(res.data);
+      })
+      .catch((err: Error) => {
+        console.warn(err);
+        alert("Ошибка при получении Лайков");
+      });
+  }, [likesCallback]);
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />;
@@ -43,36 +78,25 @@ const FullPost: FC<IPost> = () => {
             ? `${process.env.REACT_APP_API_URL}${data?.imageUrl}`
             : ""
         }
-        // imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
         user={data?.user}
         createdAt={data?.createdAt}
         viewsCount={data?.viewsCount}
-        commentsCount={3}
+        commentsCount={comments.length}
+        likesCount={likes.length}
+        isLiked={likes.some((like: any) => like.user === userData._id)}
+        likesCallback={() => setLikesCallback((prevState) => !prevState)}
         tags={data?.tags}
         isFullPost
       >
         <ReactMarkdown children={data?.text} />
       </Post>
-      <CommentsBlock
-        items={[
-          {
-            user: {
-              fullName: "Вася Пупкин",
-              avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
-            },
-            text: "Это тестовый комментарий 555555",
-          },
-          {
-            user: {
-              fullName: "Иван Иванов",
-              avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
-            },
-            text: "When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top",
-          },
-        ]}
-        isLoading={false}
-      >
-        <AddComment />
+      <CommentsBlock items={comments} isLoading={isCommentsLoading}>
+        {isAuth && (
+          <AddComment
+            postId={data?._id}
+            callback={() => setCommentsCallback((prevState) => !prevState)}
+          />
+        )}
       </CommentsBlock>
     </>
   );

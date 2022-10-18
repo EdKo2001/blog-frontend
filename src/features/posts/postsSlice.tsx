@@ -6,8 +6,24 @@ import IPost from "types/Post.interface";
 
 export const fetchPosts = createAsyncThunk(
   "posts/fetchPosts",
-  async (_, thunkAPI: any) => {
+  async (
+    payload: { popular?: boolean; relevant?: boolean; tag?: string },
+    thunkAPI: any
+  ) => {
     try {
+      const { popular, relevant, tag } = payload;
+      if (popular) {
+        const { data } = await axios.get("/posts?popular");
+        return data;
+      }
+      // if (relevant) {
+      //   const { data } = await axios.get("/posts?relevant");
+      //   return data;
+      // }
+      if (tag) {
+        const { data } = await axios.get(`/posts?tag=${tag}`);
+        return data;
+      }
       const { data } = await axios.get("/posts");
       return data;
     } catch (error) {

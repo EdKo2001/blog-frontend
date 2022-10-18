@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -13,13 +14,17 @@ import SideBlock from "./SideBlock";
 import ITagsBlock from "types/TagsBlock.interface";
 
 const TagsBlock: FC<ITagsBlock> = ({ items, isLoading = true }) => {
+  const uniqueTags = items.filter((element, index) => {
+    return items.indexOf(element) === index;
+  });
+
   return (
-    <SideBlock title="Тэги">
+    <SideBlock title="Tags">
       <List>
-        {(isLoading ? [...Array(5)] : items).map((name, i) => (
-          <a
+        {(isLoading ? [...Array(5)] : uniqueTags).map((name, i) => (
+          <Link
+            to={`/tag/${name}`}
             style={{ textDecoration: "none", color: "black" }}
-            href={`/tags/${name}`}
           >
             <ListItem key={i} disablePadding>
               <ListItemButton>
@@ -33,7 +38,7 @@ const TagsBlock: FC<ITagsBlock> = ({ items, isLoading = true }) => {
                 )}
               </ListItemButton>
             </ListItem>
-          </a>
+          </Link>
         ))}
       </List>
     </SideBlock>

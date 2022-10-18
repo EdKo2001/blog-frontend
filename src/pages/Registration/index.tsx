@@ -11,23 +11,23 @@ import Avatar from "@mui/material/Avatar";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
-import { fetchRegister, selectIsAuth } from "features/auth/authSlice";
+import {
+  selectAuthErrors,
+  fetchRegister,
+  selectIsAuth,
+} from "features/auth/authSlice";
 
 import styles from "./Login.module.scss";
 
 const Registration = () => {
   const isAuth = useAppSelector(selectIsAuth);
+  const authErrors = useAppSelector(selectAuthErrors);
   const dispatch = useThunkDispatch();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm({
-    defaultValues: {
-      fullName: "Вася Пупкин",
-      email: "vasya@test.ru",
-      password: "1234",
-    },
     mode: "onChange",
   });
 
@@ -35,7 +35,7 @@ const Registration = () => {
     const data = await dispatch(fetchRegister(values));
 
     if (!data.payload) {
-      return alert("Не удалось регистрироваться!");
+      return alert("Failed to register!");
     }
 
     if ("token" in data.payload) {
@@ -50,36 +50,36 @@ const Registration = () => {
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
-        Создание аккаунта
+        Create an account
       </Typography>
       <div className={styles.avatar}>
         <Avatar sx={{ width: 100, height: 100 }} />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
-          error={Boolean(errors.fullName?.message)}
-          helperText={errors.fullName?.message}
-          {...register("fullName", { required: "Укажите полное имя" })}
+          error={Boolean(authErrors?.fullName)}
+          helperText={authErrors?.fullName}
+          {...register("fullName", { required: "Full name is required" })}
           className={styles.field}
-          label="Полное имя"
+          label="Full name"
           fullWidth
         />
         <TextField
-          error={Boolean(errors.email?.message)}
-          helperText={errors.email?.message}
+          error={Boolean(authErrors?.email)}
+          helperText={authErrors?.email}
           type="email"
-          {...register("email", { required: "Укажите почту" })}
+          {...register("email", { required: "Email is required" })}
           className={styles.field}
-          label="E-Mail"
+          label="Email"
           fullWidth
         />
         <TextField
-          error={Boolean(errors.password?.message)}
-          helperText={errors.password?.message}
+          error={Boolean(authErrors?.password)}
+          helperText={authErrors?.password}
           type="password"
-          {...register("password", { required: "Укажите пароль" })}
+          {...register("password", { required: "Password is required" })}
           className={styles.field}
-          label="Пароль"
+          label="Password"
           fullWidth
         />
         <Button
@@ -89,7 +89,7 @@ const Registration = () => {
           variant="contained"
           fullWidth
         >
-          Зарегистрироваться
+          Register
         </Button>
       </form>
     </Paper>

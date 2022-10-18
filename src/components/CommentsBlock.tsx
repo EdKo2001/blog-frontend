@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import moment from "moment";
 
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -18,7 +19,7 @@ const CommentsBlock: FC<ICommentsBlock> = ({
   isLoading = true,
 }) => {
   return (
-    <SideBlock title="Комментарии">
+    <SideBlock title="Comments">
       <List>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
           <React.Fragment key={index}>
@@ -37,12 +38,21 @@ const CommentsBlock: FC<ICommentsBlock> = ({
                 </div>
               ) : (
                 <ListItemText
-                  primary={obj.user.fullName}
+                  primary={
+                    <>
+                      {obj.user.fullName}{" "}
+                      <span style={{ fontSize: 11 }}>
+                        {moment(obj.createAt).format("MMM D YYYY")}
+                      </span>
+                    </>
+                  }
                   secondary={obj.text}
                 />
               )}
             </ListItem>
-            <Divider variant="inset" component="li" />
+            {items.length - 1 !== index && (
+              <Divider variant="inset" component="li" />
+            )}
           </React.Fragment>
         ))}
       </List>

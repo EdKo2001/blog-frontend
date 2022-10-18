@@ -2,12 +2,15 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 import clsx from "clsx";
+import axios from "utils/axios";
 
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import EyeIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import UserInfo from "../UserInfo";
 import PostSkeleton from "./PostSkeleton";
@@ -28,6 +31,9 @@ const Post: FC<IPost> = ({
   user,
   viewsCount,
   commentsCount,
+  likesCount,
+  isLiked,
+  likesCallback,
   tags,
   children,
   isFullPost,
@@ -44,6 +50,20 @@ const Post: FC<IPost> = ({
     if (window.confirm("Вы действительно хотите удалить статью?")) {
       dispatch(fetchRemovePost(id as number));
     }
+  };
+
+  const like = async () => {
+    await axios
+      .put(`/posts/${id}/like`)
+      .then(() => likesCallback?.())
+      .catch((err: Error) => console.log(err));
+  };
+
+  const unlike = async () => {
+    await axios
+      .put(`/posts/${id}/unlike`)
+      .then(() => likesCallback?.())
+      .catch((err: Error) => console.log(err));
   };
 
   return (
@@ -68,7 +88,7 @@ const Post: FC<IPost> = ({
         />
       )}
       <div className={styles.wrapper}>
-        <UserInfo {...user} additionalText={createdAt!} />
+        <UserInfo {...user} postedOn={createdAt!} />
         <div className={styles.indention}>
           <h2
             className={clsx(styles.title, { [styles.titleFull]: isFullPost })}
@@ -87,12 +107,51 @@ const Post: FC<IPost> = ({
           {children && <div className={styles.content}>{children}</div>}
           <ul className={styles.postDetails}>
             <li>
-              <EyeIcon />
-              <span>{viewsCount}</span>
+              {isFullPost ? (
+                <>
+                  <EyeIcon />
+                  <span>{viewsCount}</span>
+                </>
+              ) : (
+                <Link to={`/posts/${id}`}>
+                  <EyeIcon />
+                  <span>{viewsCount}</span>
+                </Link>
+              )}
             </li>
             <li>
-              <CommentIcon />
-              <span>{commentsCount}</span>
+              {isFullPost ? (
+                <>
+                  <CommentIcon />
+                  <span>{commentsCount}</span>
+                </>
+              ) : (
+                <Link to={`/posts/${id}`}>
+                  <CommentIcon />
+                  <span>{commentsCount}</span>
+                </Link>
+              )}
+            </li>
+            <li>
+              {isFullPost ? (
+                <button onClick={isLiked ? unlike : like}>
+                  {isLiked ? (
+                    <FavoriteIcon htmlColor="red" />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
+                  <span>{likesCount}</span>
+                </button>
+              ) : (
+                <Link to={`/posts/${id}`}>
+                  {isLiked ? (
+                    <FavoriteIcon htmlColor="red" />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
+                  <span>{likesCount}</span>
+                </Link>
+              )}
             </li>
           </ul>
         </div>

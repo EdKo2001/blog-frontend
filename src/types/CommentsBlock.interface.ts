@@ -5,6 +5,7 @@ interface ICommentsBlock {
       avatarUrl: string;
     };
     text: string;
+    createdAt: Date;
   }[];
   children?: any;
   isLoading?: boolean;

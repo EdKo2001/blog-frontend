@@ -7,6 +7,9 @@ interface IPost {
   user?: object;
   viewsCount?: number;
   commentsCount?: number;
+  likesCount?: number;
+  isLiked?: boolean;
+  likesCallback?: () => void;
   tags?: number[];
   children?: any;
   isFullPost?: boolean;

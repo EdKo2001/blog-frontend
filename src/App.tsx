@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 
@@ -7,17 +7,22 @@ import Header from "components/Header";
 
 import { Home, FullPost, Registration, AddPost, Login } from "./pages";
 
-import { fetchAuthMe, selectIsAuth } from "features/auth/authSlice";
+import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
 
-import { useAppSelector, useThunkDispatch } from "app/hooks";
+import { useAppDispatch, useThunkDispatch } from "app/hooks";
 
 function App() {
-  const isAuth = useAppSelector(selectIsAuth);
   const dispatch = useThunkDispatch();
+  const dispatchApp = useAppDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(fetchAuthMe());
-  }, [isAuth]);
+  }, []);
+
+  useEffect(() => {
+    dispatchApp(resetErrors());
+  }, [location]);
 
   return (
     <>
@@ -28,8 +33,19 @@ function App() {
           <Route path="/posts/:id" element={<FullPost />} />
           <Route path="/posts/:id/edit" element={<AddPost />} />
           <Route path="/add-post" element={<AddPost />} />
+          <Route path="/tag/:slug" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
+          <Route
+            path="*"
+            element={
+              <img
+                src="./404.png"
+                alt="page not found"
+                style={{ display: "block", margin: "auto" }}
+              />
+            }
+          />
         </Routes>
       </Container>
     </>

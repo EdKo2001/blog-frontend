@@ -10,7 +10,7 @@ export const fetchAuth = createAsyncThunk(
       console.log(data);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.errors);
     }
   }
 );
@@ -22,7 +22,7 @@ export const fetchRegister = createAsyncThunk(
       const { data } = await axios.post("/auth/register", params);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.errors);
     }
   }
 );
@@ -42,6 +42,7 @@ export const fetchAuthMe = createAsyncThunk(
 const initialState: any = {
   data: null,
   status: "loading",
+  errors: null,
 };
 
 const authSlice = createSlice({
@@ -50,6 +51,9 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.data = null;
+    },
+    resetErrors: (state) => {
+      state.errors = null;
     },
   },
   extraReducers: (builder) => {
@@ -61,9 +65,10 @@ const authSlice = createSlice({
       state.status = "loaded";
       state.data = payload;
     });
-    builder.addCase(fetchAuth.rejected, (state) => {
+    builder.addCase(fetchAuth.rejected, (state, { payload }) => {
       state.status = "error";
       state.data = null;
+      state.errors = payload;
     });
     builder.addCase(fetchAuthMe.pending, (state) => {
       state.status = "loading";
@@ -85,15 +90,17 @@ const authSlice = createSlice({
       state.status = "loaded";
       state.data = payload;
     });
-    builder.addCase(fetchRegister.rejected, (state) => {
+    builder.addCase(fetchRegister.rejected, (state, { payload }) => {
       state.status = "error";
       state.data = null;
+      state.errors = payload;
     });
   },
 });
 
 export const selectIsAuth = (state: any) => Boolean(state.auth.data);
+export const selectAuthErrors = (state: any) => state.auth.errors;
 
 export const authReducer = authSlice.reducer;
 
-export const { logout } = authSlice.actions;
+export const { logout, resetErrors } = authSlice.actions;
