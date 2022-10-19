@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import Tabs from "@mui/material/Tabs";
@@ -18,31 +18,53 @@ const Home = () => {
   const { posts, tags } = useAppSelector((state) => state.posts);
   const [tabIndex, setTabIndex] = useState(0);
   const { slug } = useParams();
+  const [pageNumber, setPageNumber] = useState(1);
+  const limit = 4;
 
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
 
   const handleTabChange = (_: any, newTabIndex: number) => {
+    setPageNumber(1);
     setTabIndex(newTabIndex);
   };
 
   useEffect(() => {
+    setPageNumber(1);
+  }, [slug]);
+
+  useEffect(() => {
     if (slug) {
-      dispatch(fetchPosts({ tag: slug }));
+      dispatch(fetchPosts({ tag: slug, page: pageNumber, limit }));
     } else {
       if (tabIndex === 1) {
-        dispatch(fetchPosts({ popular: true }));
+        dispatch(fetchPosts({ popular: true, page: pageNumber, limit }));
       } else if (tabIndex === 2) {
-        // dispatch(fetchPosts({ relevant: true }));
+        dispatch(fetchPosts({ relevant: true, page: pageNumber, limit }));
       } else {
-        dispatch(fetchPosts({}));
+        dispatch(fetchPosts({ page: pageNumber, limit }));
       }
     }
-  }, [tabIndex, slug]);
+  }, [tabIndex, slug, pageNumber]);
 
   useEffect(() => {
     dispatch(fetchTags());
   }, []);
+
+  const observer: any = useRef();
+  const lastPostRef = useCallback(
+    (node: any) => {
+      if (isPostsLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && posts.items.next) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isPostsLoading, posts.items.next]
+  );
 
   return (
     <>
@@ -65,9 +87,28 @@ const Home = () => {
       )}
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
-            isPostsLoading ? (
-              <Post key={index} isLoading />
+          {posts.items.results.map((obj, index) =>
+            posts.items.results.length === index + 1 ? (
+              <Post
+                id={obj._id}
+                title={obj.title}
+                imageUrl={
+                  obj.imageUrl
+                    ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
+                    : ""
+                }
+                user={obj.user}
+                createdAt={obj.createdAt}
+                viewsCount={obj.viewsCount}
+                commentsCount={obj.comments?.length}
+                likesCount={obj.likes?.length}
+                isLiked={obj.likes?.some(
+                  (like: any) => like.user === userData._id
+                )}
+                tags={obj.tags}
+                isEditable={userData._id === obj.user?._id}
+                ref={lastPostRef}
+              />
             ) : (
               <Post
                 id={obj._id}
@@ -80,16 +121,18 @@ const Home = () => {
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
-                commentsCount={obj.comments.length}
-                likesCount={obj.likes.length}
-                isLiked={obj.likes.some(
+                commentsCount={obj.comments?.length}
+                likesCount={obj.likes?.length}
+                isLiked={obj.likes?.some(
                   (like: any) => like.user === userData._id
                 )}
                 tags={obj.tags}
-                isEditable={userData._id === obj.user._id}
+                isEditable={userData._id === obj.user?._id}
               />
             )
           )}
+          {isPostsLoading &&
+            [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)}
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />

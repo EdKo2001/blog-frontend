@@ -19,14 +19,15 @@ const TagsBlock: FC<ITagsBlock> = ({ items, isLoading = true }) => {
   });
 
   return (
-    <SideBlock title="Tags">
+    <SideBlock title="Popular Tags">
       <List>
-        {(isLoading ? [...Array(5)] : uniqueTags).map((name, i) => (
+        {(isLoading ? [...Array(10)] : uniqueTags).map((name, i) => (
           <Link
             to={`/tag/${name}`}
             style={{ textDecoration: "none", color: "black" }}
+            key={i}
           >
-            <ListItem key={i} disablePadding>
+            <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <TagIcon />

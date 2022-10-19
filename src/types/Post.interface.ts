@@ -4,9 +4,11 @@ interface IPost {
   title?: string;
   createdAt?: string;
   imageUrl?: string;
-  user?: object;
+  user?: { _id: number };
   viewsCount?: number;
+  comments?: [];
   commentsCount?: number;
+  likes?: [];
   likesCount?: number;
   isLiked?: boolean;
   likesCallback?: () => void;
@@ -15,6 +17,7 @@ interface IPost {
   isFullPost?: boolean;
   isLoading?: boolean;
   isEditable?: boolean;
+  ref?: any;
 }
 
 export default IPost;
