@@ -103,10 +103,10 @@ const Home = () => {
                 commentsCount={obj.comments?.length}
                 likesCount={obj.likes?.length}
                 isLiked={obj.likes?.some(
-                  (like: any) => like.user === userData._id
+                  (like: any) => like.user === userData?._id
                 )}
                 tags={obj.tags}
-                isEditable={userData._id === obj.user?._id}
+                isEditable={userData?._id === obj.user?._id}
                 ref={lastPostRef}
               />
             ) : (
@@ -124,10 +124,10 @@ const Home = () => {
                 commentsCount={obj.comments?.length}
                 likesCount={obj.likes?.length}
                 isLiked={obj.likes?.some(
-                  (like: any) => like.user === userData._id
+                  (like: any) => like.user === userData?._id
                 )}
                 tags={obj.tags}
-                isEditable={userData._id === obj.user?._id}
+                isEditable={userData?._id === obj.user?._id}
               />
             )
           )}

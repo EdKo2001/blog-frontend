@@ -83,7 +83,7 @@ const FullPost: FC<IPost> = () => {
         viewsCount={data?.viewsCount}
         commentsCount={comments.length}
         likesCount={likes.length}
-        isLiked={likes.some((like: any) => like.user === userData._id)}
+        isLiked={likes.some((like: any) => like.user === userData?._id)}
         likesCallback={() => setLikesCallback((prevState) => !prevState)}
         tags={data?.tags}
         isFullPost
