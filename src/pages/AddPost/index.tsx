@@ -3,6 +3,7 @@ import React, {
   useRef,
   useCallback,
   useMemo,
+  useEffect,
   ChangeEvent,
 } from "react";
 import { useNavigate, Navigate, useParams } from "react-router-dom";
@@ -47,7 +48,7 @@ const AddPost = () => {
       setImageUrl(data.url);
     } catch (err) {
       console.warn(err);
-      alert("Ошибка при загрузке файла!");
+      alert("File upload error!");
     }
   };
 
@@ -79,11 +80,11 @@ const AddPost = () => {
       navigate(`/posts/${_id}`);
     } catch (err) {
       console.warn(err);
-      alert("Ошибка при создании статьи!");
+      alert("Error getting article!");
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (id) {
       axios
         .get(`/posts/${id}`)
@@ -95,7 +96,7 @@ const AddPost = () => {
         })
         .catch((err: Error) => {
           console.warn(err);
-          alert("Ошибка при получении статьи!");
+          alert("Error getting article!");
         });
     }
   }, []);
@@ -105,7 +106,7 @@ const AddPost = () => {
       spellChecker: false,
       maxHeight: "400px",
       autofocus: true,
-      placeholder: "Введите текст...",
+      placeholder: "Enter text...",
       status: false,
       autosave: { uniqueId: "uniqueId", enabled: true, delay: 1000 },
     }),
@@ -123,7 +124,7 @@ const AddPost = () => {
         variant="outlined"
         size="large"
       >
-        Загрузить превью
+        Upload preview
       </Button>
       <input
         ref={inputFileRef}
@@ -138,7 +139,7 @@ const AddPost = () => {
             color="error"
             onClick={onClickRemoveImage}
           >
-            Удалить
+            Delete
           </Button>
           <img
             className={styles.image}
@@ -154,8 +155,9 @@ const AddPost = () => {
         onChange={(e) => setTitle(e.target.value)}
         classes={{ root: styles.title }}
         variant="standard"
-        placeholder="Заголовок статьи..."
+        placeholder="Article title..."
         fullWidth
+        required
       />
       <TextField
         value={tags}
@@ -173,10 +175,18 @@ const AddPost = () => {
       />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
-          {isEditing ? "Сохранить" : "Опубликовать"}
+          {isEditing ? "Save" : "Publish"}
+        </Button>
+        <Button
+          onClick={() => {}}
+          size="large"
+          variant="contained"
+          color="secondary"
+        >
+          Draft
         </Button>
         <a href="/">
-          <Button size="large">Отмена</Button>
+          <Button size="large">Cancel</Button>
         </a>
       </div>
     </Paper>

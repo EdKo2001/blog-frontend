@@ -51,7 +51,7 @@ const Post: FC<IPost> = forwardRef(
     }
 
     const onClickRemove = () => {
-      if (window.confirm("Вы действительно хотите удалить статью?")) {
+      if (window.confirm("Are you sure you want to delete the article?")) {
         dispatch(fetchRemovePost(id as number));
       }
     };

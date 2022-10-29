@@ -135,7 +135,7 @@ const Home = () => {
             [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
+          <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
         </Grid>
       </Grid>
     </>

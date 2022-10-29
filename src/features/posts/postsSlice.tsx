@@ -48,7 +48,7 @@ export const fetchTags = createAsyncThunk(
   "posts/fetchTags",
   async (_, thunkAPI: any) => {
     try {
-      const { data } = await axios.get("/posts/tags");
+      const { data } = await axios.get("/posts/tags?page=1&limit=10");
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -85,7 +85,18 @@ const initialState: {
     status: string;
   };
   tags: {
-    items: any[];
+    items: {
+      next?: {
+        page: number;
+        limit: number;
+      };
+      previous?: {
+        page: number;
+        limit: number;
+      };
+      total?: number;
+      results: string[];
+    };
     status: string;
   };
 } = {
@@ -95,7 +106,7 @@ const initialState: {
     status: "loading",
   },
   tags: {
-    items: [],
+    items: { results: [] },
     status: "loading",
   },
 };

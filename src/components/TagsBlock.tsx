@@ -13,15 +13,11 @@ import SideBlock from "./SideBlock";
 
 import ITagsBlock from "types/TagsBlock.interface";
 
-const TagsBlock: FC<ITagsBlock> = ({ items, isLoading = true }) => {
-  const uniqueTags = items.filter((element, index) => {
-    return items.indexOf(element) === index;
-  });
-
+const TagsBlock: FC<ITagsBlock> = ({ tags, isLoading = true }) => {
   return (
     <SideBlock title="Popular Tags">
       <List>
-        {(isLoading ? [...Array(10)] : uniqueTags).map((name, i) => (
+        {(isLoading ? [...Array(10)] : tags).map((name, i) => (
           <Link
             to={`/tag/${name}`}
             style={{ textDecoration: "none", color: "black" }}

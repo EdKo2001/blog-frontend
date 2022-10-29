@@ -28,7 +28,7 @@ const CommentsBlock: FC<ICommentsBlock> = ({
                 {isLoading ? (
                   <Skeleton variant="circular" width={40} height={40} />
                 ) : (
-                  <Avatar alt={obj.user.fullName} src={obj.user.avatarUrl} />
+                  <Avatar alt={obj.user?.fullName} src={obj.user?.avatarUrl} />
                 )}
               </ListItemAvatar>
               {isLoading ? (
@@ -40,7 +40,7 @@ const CommentsBlock: FC<ICommentsBlock> = ({
                 <ListItemText
                   primary={
                     <>
-                      {obj.user.fullName}{" "}
+                      {obj.user?.fullName}{" "}
                       <span style={{ fontSize: 11 }}>
                         {moment(obj.createAt).format("MMM D YYYY")}
                       </span>

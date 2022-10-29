@@ -1,7 +1,5 @@
 interface ITagsBlock {
-  items: {
-    name: string;
-  }[];
+  tags: string[];
   isLoading: boolean;
 }
 
