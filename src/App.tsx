@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 
 import Header from "components/Header";
 
-import { Home, FullPost, Registration, AddPost, Login } from "./pages";
+import { Home, FullPost, Registration, AddPost, Login, MyPosts } from "./pages";
 
 import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
 
@@ -33,6 +33,7 @@ function App() {
           <Route path="/posts/:id" element={<FullPost />} />
           <Route path="/posts/:id/edit" element={<AddPost />} />
           <Route path="/add-post" element={<AddPost />} />
+          <Route path="/my-posts" element={<MyPosts />} />
           <Route path="/tag/:slug" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />

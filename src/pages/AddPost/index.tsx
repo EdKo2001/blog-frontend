@@ -22,6 +22,7 @@ import { selectIsAuth } from "features/auth/authSlice";
 
 import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
+import { stat } from "fs";
 
 const AddPost = () => {
   const { id } = useParams();
@@ -32,6 +33,7 @@ const AddPost = () => {
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [status, setStatus] = useState("");
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const isEditing = Boolean(id);
@@ -60,7 +62,7 @@ const AddPost = () => {
     setText(value);
   }, []);
 
-  const onSubmit = async () => {
+  const onSubmit = async (status?: string) => {
     try {
       setLoading(true);
 
@@ -69,6 +71,7 @@ const AddPost = () => {
         imageUrl,
         tags,
         text,
+        status,
       };
 
       const { data } = isEditing
@@ -93,6 +96,7 @@ const AddPost = () => {
           setText(data.text);
           setImageUrl(data.imageUrl);
           setTags(data.tags.join(","));
+          setStatus(data.status);
         })
         .catch((err: Error) => {
           console.warn(err);
@@ -174,18 +178,24 @@ const AddPost = () => {
         options={options}
       />
       <div className={styles.buttons}>
-        <Button onClick={onSubmit} size="large" variant="contained">
+        <Button
+          onClick={() => onSubmit(status)}
+          size="large"
+          variant="contained"
+        >
           {isEditing ? "Save" : "Publish"}
         </Button>
         <Button
-          onClick={() => {}}
+          onClick={() =>
+            onSubmit(status === "drafted" ? "published" : "drafted")
+          }
           size="large"
           variant="contained"
           color="secondary"
         >
-          Draft
+          {status === "drafted" ? "Publish" : "Draft"}
         </Button>
-        <a href="/">
+        <a href={isEditing ? "/my-posts" : "/"}>
           <Button size="large">Cancel</Button>
         </a>
       </div>

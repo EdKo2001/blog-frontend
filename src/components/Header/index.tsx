@@ -31,6 +31,9 @@ const Header = () => {
           <div className={styles.buttons}>
             {isAuth ? (
               <>
+                <Link to="/my-posts">
+                  <Button variant="text">My Articles</Button>
+                </Link>
                 <Link to="/add-post">
                   <Button variant="contained">Write an article</Button>
                 </Link>

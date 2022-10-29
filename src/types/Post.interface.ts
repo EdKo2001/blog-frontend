@@ -13,6 +13,7 @@ interface IPost {
   isLiked?: boolean;
   likesCallback?: () => void;
   tags?: number[];
+  deleteCallback?: () => void;
   children?: any;
   isFullPost?: boolean;
   isLoading?: boolean;
