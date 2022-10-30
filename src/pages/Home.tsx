@@ -34,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     setPageNumber(1);
-    setPageTitle(`Posts with #${slug}`);
+    setPageTitle(slug ? `Posts with #${slug}` : "Latest Posts");
   }, [slug]);
 
   useEffect(() => {
