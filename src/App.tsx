@@ -13,13 +13,14 @@ import {
   Login,
   MyPosts,
   Favorites,
+  Admin,
 } from "./pages";
 
 import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
 
 import { useAppDispatch, useThunkDispatch } from "app/hooks";
 
-import { AuthorRoute, PrivateRoute } from "utils/routes";
+import { AdminRoute, AuthorRoute, PrivateRoute } from "utils/routes";
 
 function App() {
   const dispatch = useThunkDispatch();
@@ -76,6 +77,14 @@ function App() {
           <Route path="/tag/:slug" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <Admin />
+              </AdminRoute>
+            }
+          />
           <Route
             path="*"
             element={

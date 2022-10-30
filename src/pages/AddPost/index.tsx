@@ -27,6 +27,7 @@ const AddPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isAuth = useAppSelector(selectIsAuth);
+  const userId = useAppSelector((state) => state.auth?.data?._id);
   const [isLoading, setLoading] = useState(false);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
@@ -91,6 +92,9 @@ const AddPost = () => {
       axios
         .get(`/posts/${id}`)
         .then(({ data }: any) => {
+          if (data.user._id !== userId) {
+            return navigate("/my-posts");
+          }
           setTitle(data.title);
           setText(data.text);
           setImageUrl(data.imageUrl);

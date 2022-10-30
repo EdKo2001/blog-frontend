@@ -87,8 +87,8 @@ const Home = () => {
       )}
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {posts.items.results.map((obj, index) =>
-            posts.items.results.length === index + 1 ? (
+          {posts.items.results.map((obj, idx) =>
+            posts.items.results.length === idx + 1 ? (
               <Post
                 id={obj._id}
                 title={obj.title}
@@ -108,6 +108,7 @@ const Home = () => {
                 tags={obj.tags}
                 isEditable={userData?._id === obj.user?._id}
                 ref={lastPostRef}
+                key={`post${idx}`}
               />
             ) : (
               <Post
@@ -128,6 +129,7 @@ const Home = () => {
                 )}
                 tags={obj.tags}
                 isEditable={userData?._id === obj.user?._id}
+                key={`post${idx}`}
               />
             )
           )}

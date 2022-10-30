@@ -33,6 +33,12 @@ const Header = () => {
             {isAuth ? (
               <>
                 {userData?.role === "admin" && (
+                  <Link to="/admin">
+                    <Button variant="text">Admin</Button>
+                  </Link>
+                )}
+                {(userData?.role === "author" ||
+                  userData?.role === "admin") && (
                   <>
                     <Link to="/my-posts">
                       <Button variant="text">My Articles</Button>

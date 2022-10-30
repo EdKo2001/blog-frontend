@@ -1,5 +1,6 @@
 FEAT: my account
 FEAT: roles interface
+FEAT: redux toolkit utils
 
 FEAT: SEO https://www.npmjs.com/package/react-helmet
 
