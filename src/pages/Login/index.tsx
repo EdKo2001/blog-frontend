@@ -8,6 +8,8 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
+import SEO from "components/SEO";
+
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
 import {
@@ -53,6 +55,7 @@ const Login = () => {
 
   return (
     <Paper classes={{ root: styles.root }}>
+      <SEO title="Sign In" />
       <Typography classes={{ root: styles.title }} variant="h5">
         Sign In
       </Typography>

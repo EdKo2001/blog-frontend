@@ -9,6 +9,8 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 
+import SEO from "components/SEO";
+
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
 import {
@@ -49,6 +51,7 @@ const Registration = () => {
 
   return (
     <Paper classes={{ root: styles.root }}>
+      <SEO title="Create an account" />
       <Typography classes={{ root: styles.title }} variant="h5">
         Create an account
       </Typography>

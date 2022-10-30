@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Grid } from "@mui/material";
 
 import Post from "components/Post";
+import SEO from "components/SEO";
 
 import { useAppSelector } from "app/hooks";
 
@@ -57,6 +58,7 @@ const Favorites = () => {
 
   return (
     <div>
+      <SEO title="Favorites" />
       <Grid container spacing={4}>
         <Grid xs={12} item>
           {!isPostsLoading &&

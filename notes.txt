@@ -1,8 +1,8 @@
 FEAT: my account
-FEAT: roles interface
+FEAT: roles interface (ADMIN left)
 FEAT: redux toolkit utils
 
-FEAT: SEO https://www.npmjs.com/package/react-helmet
+FEAT: SEO add for my account page
 
 FEAT: fix error messages displaying
 

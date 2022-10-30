@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 import Container from "@mui/material/Container";
 
@@ -21,8 +22,9 @@ import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
 import { useAppDispatch, useThunkDispatch } from "app/hooks";
 
 import { AdminRoute, AuthorRoute, PrivateRoute } from "utils/routes";
+import SEO from "components/SEO";
 
-function App() {
+const App = () => {
   const dispatch = useThunkDispatch();
   const dispatchApp = useAppDispatch();
   const location = useLocation();
@@ -36,7 +38,8 @@ function App() {
   }, [location]);
 
   return (
-    <>
+    <HelmetProvider>
+      <SEO />
       <Header />
       <Container maxWidth="lg">
         <Routes>
@@ -97,8 +100,8 @@ function App() {
           />
         </Routes>
       </Container>
-    </>
+    </HelmetProvider>
   );
-}
+};
 
 export default App;

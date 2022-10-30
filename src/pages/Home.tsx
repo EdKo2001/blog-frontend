@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 
 import Post from "components/Post";
 import TagsBlock from "components/TagsBlock";
+import SEO from "components/SEO";
 
 import { fetchPosts, fetchTags } from "features/posts/postsSlice";
 
@@ -20,17 +21,20 @@ const Home = () => {
   const { slug } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
   const limit = 4;
+  const [pageTitle, setPageTitle] = useState("Latest Posts");
 
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
 
-  const handleTabChange = (_: any, newTabIndex: number) => {
+  const handleTabChange = (e: any, newTabIndex: number) => {
     setPageNumber(1);
+    setPageTitle(e.target.textContent + " Posts");
     setTabIndex(newTabIndex);
   };
 
   useEffect(() => {
     setPageNumber(1);
+    setPageTitle(`Posts with #${slug}`);
   }, [slug]);
 
   useEffect(() => {
@@ -68,6 +72,7 @@ const Home = () => {
 
   return (
     <>
+      <SEO title={pageTitle} />
       {!slug && (
         <Tabs
           style={{ marginBottom: 15 }}

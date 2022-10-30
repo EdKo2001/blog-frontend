@@ -8,6 +8,7 @@ import axios from "utils/axios";
 import Post from "components/Post";
 import AddComment from "components/AddComment";
 import CommentsBlock from "components/CommentsBlock";
+import SEO from "components/SEO";
 
 import { useAppSelector } from "app/hooks";
 import { selectIsAuth } from "features/auth/authSlice";
@@ -70,6 +71,7 @@ const FullPost: FC<IPost> = () => {
 
   return (
     <>
+      <SEO title={data?.title} description={data?.text.substring(0, 150)} />
       <Post
         id={data?._id}
         title={data?.title}

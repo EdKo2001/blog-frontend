@@ -14,6 +14,8 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
+import SEO from "components/SEO";
+
 import axios from "utils/axios";
 
 import { useAppSelector } from "app/hooks";
@@ -126,6 +128,7 @@ const AddPost = () => {
 
   return (
     <Paper style={{ padding: 30 }}>
+      <SEO title="Write an article" />
       <Button
         onClick={() => inputFileRef.current?.click()}
         variant="outlined"
