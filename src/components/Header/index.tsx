@@ -13,6 +13,7 @@ import styles from "./Header.module.scss";
 const Header = () => {
   const dispatch = useThunkDispatch();
   const isAuth = useAppSelector(selectIsAuth);
+  const userData = useAppSelector((state) => state.auth.data);
 
   const onClickLogout = () => {
     if (window.confirm("Вы действительно хотите выйти?")) {
@@ -31,11 +32,21 @@ const Header = () => {
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <Link to="/my-posts">
-                  <Button variant="text">My Articles</Button>
+                {userData?.role === "admin" && (
+                  <>
+                    <Link to="/my-posts">
+                      <Button variant="text">My Articles</Button>
+                    </Link>
+                    <Link to="/add-post">
+                      <Button variant="text">Write an article</Button>
+                    </Link>
+                  </>
+                )}
+                <Link to="/favorites">
+                  <Button variant="text">Favorites</Button>
                 </Link>
-                <Link to="/add-post">
-                  <Button variant="contained">Write an article</Button>
+                <Link to="/my-account">
+                  <Button variant="text">My Account</Button>
                 </Link>
                 <Button
                   onClick={onClickLogout}

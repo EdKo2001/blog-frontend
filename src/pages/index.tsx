@@ -4,3 +4,4 @@ export { default as AddPost } from "./AddPost";
 export { default as Registration } from "./Registration";
 export { default as Login } from "./Login";
 export { default as MyPosts } from "./MyPosts";
+export { default as Favorites } from "./Favorites";

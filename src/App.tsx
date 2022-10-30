@@ -5,11 +5,21 @@ import Container from "@mui/material/Container";
 
 import Header from "components/Header";
 
-import { Home, FullPost, Registration, AddPost, Login, MyPosts } from "./pages";
+import {
+  Home,
+  FullPost,
+  Registration,
+  AddPost,
+  Login,
+  MyPosts,
+  Favorites,
+} from "./pages";
 
 import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
 
 import { useAppDispatch, useThunkDispatch } from "app/hooks";
+
+import { AuthorRoute, PrivateRoute } from "utils/routes";
 
 function App() {
   const dispatch = useThunkDispatch();
@@ -31,9 +41,38 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/posts/:id" element={<FullPost />} />
-          <Route path="/posts/:id/edit" element={<AddPost />} />
-          <Route path="/add-post" element={<AddPost />} />
-          <Route path="/my-posts" element={<MyPosts />} />
+          <Route
+            path="/posts/:id/edit"
+            element={
+              <AuthorRoute>
+                <AddPost />
+              </AuthorRoute>
+            }
+          />
+          <Route
+            path="/add-post"
+            element={
+              <AuthorRoute>
+                <AddPost />
+              </AuthorRoute>
+            }
+          />
+          <Route
+            path="/my-posts"
+            element={
+              <AuthorRoute>
+                <MyPosts />
+              </AuthorRoute>
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <PrivateRoute>
+                <Favorites />
+              </PrivateRoute>
+            }
+          />
           <Route path="/tag/:slug" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registration />} />
