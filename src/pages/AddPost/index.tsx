@@ -22,7 +22,6 @@ import { selectIsAuth } from "features/auth/authSlice";
 
 import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
-import { stat } from "fs";
 
 const AddPost = () => {
   const { id } = useParams();
@@ -33,7 +32,7 @@ const AddPost = () => {
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("published");
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const isEditing = Boolean(id);
