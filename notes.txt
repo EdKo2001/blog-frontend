@@ -1,6 +1,6 @@
 FEAT: my account
 FEAT: redux toolkit utils
-FEAT: ENCRYPT jwt token in localStorage (https://www.npmjs.com/package/bcrypt)
 FEAT: fix error messages displaying
 FEAT: SEARCH for the whole website
 FEAT: SEARCH for the admin
+FEAT: posts url by slug

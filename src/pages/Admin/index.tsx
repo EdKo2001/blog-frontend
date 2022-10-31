@@ -89,7 +89,7 @@ const Admin = () => {
                       title={obj.title}
                       imageUrl={
                         obj.imageUrl
-                          ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
+                          ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
                           : ""
                       }
                       user={obj.user}
@@ -114,7 +114,7 @@ const Admin = () => {
                       title={obj.title}
                       imageUrl={
                         obj.imageUrl
-                          ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
+                          ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
                           : ""
                       }
                       user={obj.user}

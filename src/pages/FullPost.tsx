@@ -77,7 +77,7 @@ const FullPost: FC<IPost> = () => {
         title={data?.title}
         imageUrl={
           data?.imageUrl
-            ? `${process.env.REACT_APP_API_URL}${data?.imageUrl}`
+            ? `${process.env.REACT_APP_BACKEND_URL}${data?.imageUrl}`
             : ""
         }
         user={data?.user}
