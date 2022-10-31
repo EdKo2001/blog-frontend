@@ -13,6 +13,9 @@ const SEO = ({
     <Helmet prioritizeSeoTags>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="og:title" content={title} />
+      <meta name="og:description" content={description} />
+      <meta name="og:image" content="/android-chrome-512x512.png" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"

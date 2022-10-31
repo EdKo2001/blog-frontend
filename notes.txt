@@ -6,3 +6,4 @@ FEAT: SEO add for my account page
 
 FEAT: fix error messages displaying
 
+FEAT: create several env for captcha at least

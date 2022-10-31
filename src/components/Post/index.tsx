@@ -144,7 +144,14 @@ const Post: FC<IPost> = forwardRef(
               </li>
               <li>
                 {isFullPost ? (
-                  <button onClick={isLiked ? unlike : like}>
+                  <button
+                    onClick={isLiked ? unlike : like}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                  >
                     {isLiked ? (
                       <FavoriteIcon htmlColor="red" />
                     ) : (
