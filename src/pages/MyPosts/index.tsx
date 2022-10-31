@@ -37,7 +37,23 @@ const MyPosts = () => {
       }
     };
     getMyPosts();
-  }, [pageNumber, deleteCallback]);
+  }, [pageNumber]);
+
+  useEffect(() => {
+    const getAllPosts = async () => {
+      setPostsLoading(true);
+      try {
+        const allPosts = await axios.get(`/posts?own&page=1&limit=${limit}`);
+        setPostsData(allPosts.data);
+        setPosts(allPosts.data.results);
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setPostsLoading(false);
+      }
+    };
+    getAllPosts();
+  }, [deleteCallback]);
 
   const observer: any = useRef();
   const lastPostRef = useCallback(
@@ -64,9 +80,10 @@ const MyPosts = () => {
           {!isPostsLoading &&
             (posts.length === 0
               ? "You don't have created articles"
-              : posts.map((obj, index) =>
-                  posts.length === index + 1 ? (
+              : posts.map((obj, idx) =>
+                  posts.length === idx + 1 ? (
                     <Post
+                      key={`post${idx}`}
                       id={obj._id}
                       title={obj.title}
                       imageUrl={
@@ -91,6 +108,7 @@ const MyPosts = () => {
                     />
                   ) : (
                     <Post
+                      key={`post${idx}`}
                       id={obj._id}
                       title={obj.title}
                       imageUrl={

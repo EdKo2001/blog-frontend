@@ -92,50 +92,54 @@ const Home = () => {
       )}
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {posts.items.results.map((obj, idx) =>
-            posts.items.results.length === idx + 1 ? (
-              <Post
-                id={obj._id}
-                title={obj.title}
-                imageUrl={
-                  obj.imageUrl
-                    ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
-                    : ""
-                }
-                user={obj.user}
-                createdAt={obj.createdAt}
-                viewsCount={obj.viewsCount}
-                commentsCount={obj.comments?.length}
-                likesCount={obj.likes?.length}
-                isLiked={obj.likes?.some(
-                  (like: any) => like.user === userData?._id
-                )}
-                tags={obj.tags}
-                isEditable={userData?._id === obj.user?._id}
-                ref={lastPostRef}
-                key={`post${idx}`}
-              />
-            ) : (
-              <Post
-                id={obj._id}
-                title={obj.title}
-                imageUrl={
-                  obj.imageUrl
-                    ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
-                    : ""
-                }
-                user={obj.user}
-                createdAt={obj.createdAt}
-                viewsCount={obj.viewsCount}
-                commentsCount={obj.comments?.length}
-                likesCount={obj.likes?.length}
-                isLiked={obj.likes?.some(
-                  (like: any) => like.user === userData?._id
-                )}
-                tags={obj.tags}
-                isEditable={userData?._id === obj.user?._id}
-                key={`post${idx}`}
-              />
+          {posts.items.results.length === 0 ? (
+            <>No articles</>
+          ) : (
+            posts.items.results.map((obj, idx) =>
+              posts.items.results.length === idx + 1 ? (
+                <Post
+                  id={obj._id}
+                  title={obj.title}
+                  imageUrl={
+                    obj.imageUrl
+                      ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
+                      : ""
+                  }
+                  user={obj.user}
+                  createdAt={obj.createdAt}
+                  viewsCount={obj.viewsCount}
+                  commentsCount={obj.comments?.length}
+                  likesCount={obj.likes?.length}
+                  isLiked={obj.likes?.some(
+                    (like: any) => like.user === userData?._id
+                  )}
+                  tags={obj.tags}
+                  isEditable={userData?._id === obj.user?._id}
+                  ref={lastPostRef}
+                  key={`post${idx}`}
+                />
+              ) : (
+                <Post
+                  id={obj._id}
+                  title={obj.title}
+                  imageUrl={
+                    obj.imageUrl
+                      ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
+                      : ""
+                  }
+                  user={obj.user}
+                  createdAt={obj.createdAt}
+                  viewsCount={obj.viewsCount}
+                  commentsCount={obj.comments?.length}
+                  likesCount={obj.likes?.length}
+                  isLiked={obj.likes?.some(
+                    (like: any) => like.user === userData?._id
+                  )}
+                  tags={obj.tags}
+                  isEditable={userData?._id === obj.user?._id}
+                  key={`post${idx}`}
+                />
+              )
             )
           )}
           {isPostsLoading &&

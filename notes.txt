@@ -1,9 +1,6 @@
 FEAT: my account
-FEAT: roles interface (ADMIN left)
 FEAT: redux toolkit utils
-
-FEAT: SEO add for my account page
-
+FEAT: ENCRYPT jwt token in localStorage (https://www.npmjs.com/package/bcrypt)
 FEAT: fix error messages displaying
-
-FEAT: create several env for captcha at least
+FEAT: SEARCH for the whole website
+FEAT: SEARCH for the admin

@@ -60,7 +60,7 @@ export const fetchRemovePost = createAsyncThunk(
   "posts/fetchRemovePost",
   async (id: number, thunkAPI: any) => {
     try {
-      return axios.delete(`/posts/${id}`);
+      return await axios.delete(`/posts/${id}`);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

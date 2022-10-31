@@ -15,6 +15,7 @@ import {
   MyPosts,
   Favorites,
   Admin,
+  MyAccount,
 } from "./pages";
 
 import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
@@ -74,6 +75,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Favorites />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/my-account"
+            element={
+              <PrivateRoute>
+                <MyAccount />
               </PrivateRoute>
             }
           />

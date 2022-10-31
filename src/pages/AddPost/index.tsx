@@ -28,9 +28,7 @@ import styles from "./AddPost.module.scss";
 const AddPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isAuth = useAppSelector(selectIsAuth);
-  const userId = useAppSelector((state) => state.auth?.data?._id);
-  const [isLoading, setLoading] = useState(false);
+  const authData = useAppSelector((state) => state.auth?.data);
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
@@ -66,8 +64,6 @@ const AddPost = () => {
 
   const onSubmit = async (status?: string) => {
     try {
-      setLoading(true);
-
       const fields = {
         title,
         imageUrl,
@@ -94,7 +90,7 @@ const AddPost = () => {
       axios
         .get(`/posts/${id}`)
         .then(({ data }: any) => {
-          if (data.user._id !== userId) {
+          if (data.user._id !== authData._id && authData.role !== "admin") {
             return navigate("/my-posts");
           }
           setTitle(data.title);
@@ -105,7 +101,10 @@ const AddPost = () => {
         })
         .catch((err: Error) => {
           console.warn(err);
-          alert("Error getting article!");
+          alert("Such Article doesn't exist");
+          setTimeout(() => {
+            navigate("/my-posts");
+          }, 1000);
         });
     }
   }, []);
@@ -121,10 +120,6 @@ const AddPost = () => {
     }),
     []
   );
-
-  if (!window.localStorage.getItem("token") && !isAuth) {
-    return <Navigate to="/" />;
-  }
 
   return (
     <Paper style={{ padding: 30 }}>
@@ -153,7 +148,7 @@ const AddPost = () => {
           </Button>
           <img
             className={styles.image}
-            src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
+            src={`${process.env.REACT_APP_BACKEND_URL}${imageUrl}`}
             alt="Uploaded"
           />
         </>

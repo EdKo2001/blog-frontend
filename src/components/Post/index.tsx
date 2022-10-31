@@ -123,7 +123,13 @@ const Post: FC<IPost> = forwardRef(
                     <span>{viewsCount}</span>
                   </>
                 ) : (
-                  <Link to={`/posts/${id}`}>
+                  <Link
+                    to={`/posts/${id}`}
+                    style={{
+                      color: "rgba(0, 0, 0, 0.87)",
+                      textDecoration: "none",
+                    }}
+                  >
                     <EyeIcon />
                     <span>{viewsCount}</span>
                   </Link>
@@ -136,7 +142,13 @@ const Post: FC<IPost> = forwardRef(
                     <span>{commentsCount}</span>
                   </>
                 ) : (
-                  <Link to={`/posts/${id}`}>
+                  <Link
+                    to={`/posts/${id}`}
+                    style={{
+                      color: "rgba(0, 0, 0, 0.87)",
+                      textDecoration: "none",
+                    }}
+                  >
                     <CommentIcon />
                     <span>{commentsCount}</span>
                   </Link>
@@ -160,7 +172,13 @@ const Post: FC<IPost> = forwardRef(
                     <span>{likesCount}</span>
                   </button>
                 ) : (
-                  <Link to={`/posts/${id}`}>
+                  <Link
+                    to={`/posts/${id}`}
+                    style={{
+                      color: "rgba(0, 0, 0, 0.87)",
+                      textDecoration: "none",
+                    }}
+                  >
                     {isLiked ? (
                       <FavoriteIcon htmlColor="red" />
                     ) : (
