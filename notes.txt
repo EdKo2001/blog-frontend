@@ -3,4 +3,5 @@ FEAT: redux toolkit utils
 FEAT: fix error messages displaying
 FEAT: SEARCH for the whole website
 FEAT: SEARCH for the admin
+
 FEAT: posts url by slug
