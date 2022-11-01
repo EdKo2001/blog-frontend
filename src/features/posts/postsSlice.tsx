@@ -58,9 +58,9 @@ export const fetchTags = createAsyncThunk(
 
 export const fetchRemovePost = createAsyncThunk(
   "posts/fetchRemovePost",
-  async (id: number, thunkAPI: any) => {
+  async (slug: string, thunkAPI: any) => {
     try {
-      return await axios.delete(`/posts/${id}`);
+      return await axios.delete(`/posts/${slug}`);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -148,7 +148,7 @@ const postsSlice = createSlice({
     });
     builder.addCase(fetchRemovePost.pending, (state, action) => {
       state.posts.items.results = state.posts.items.results.filter(
-        (obj) => obj._id !== action.meta.arg
+        (obj) => obj.slug !== action.meta.arg
       );
     });
   },

@@ -26,7 +26,7 @@ import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
 
 const AddPost = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const authData = useAppSelector((state) => state.auth?.data);
   const [text, setText] = useState("");
@@ -36,7 +36,7 @@ const AddPost = () => {
   const [status, setStatus] = useState("published");
   const inputFileRef = useRef<HTMLInputElement>(null);
 
-  const isEditing = Boolean(id);
+  const isEditing = Boolean(slug);
 
   const handleChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
     try {
@@ -73,12 +73,12 @@ const AddPost = () => {
       };
 
       const { data } = isEditing
-        ? await axios.patch(`/posts/${id}`, fields)
+        ? await axios.patch(`/posts/${slug}`, fields)
         : await axios.post("/posts", fields);
 
-      const _id = isEditing ? id : data._id;
+      const _islugd = isEditing ? slug : data.slug;
 
-      navigate(`/posts/${_id}`);
+      navigate(`/posts/${slug}`);
     } catch (err) {
       console.warn(err);
       alert("Error getting article!");
@@ -86,9 +86,9 @@ const AddPost = () => {
   };
 
   useEffect(() => {
-    if (id) {
+    if (slug) {
       axios
-        .get(`/posts/${id}`)
+        .get(`/posts/${slug}`)
         .then(({ data }: any) => {
           if (data.user._id !== authData._id && authData.role !== "admin") {
             return navigate("/my-posts");

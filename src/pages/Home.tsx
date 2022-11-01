@@ -98,8 +98,8 @@ const Home = () => {
             posts.items.results.map((obj, idx) =>
               posts.items.results.length === idx + 1 ? (
                 <Post
-                  id={obj._id}
                   title={obj.title}
+                  slug={obj.slug}
                   imageUrl={
                     obj.imageUrl
                       ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
@@ -120,8 +120,8 @@ const Home = () => {
                 />
               ) : (
                 <Post
-                  id={obj._id}
                   title={obj.title}
+                  slug={obj.slug}
                   imageUrl={
                     obj.imageUrl
                       ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`

@@ -67,8 +67,8 @@ const Favorites = () => {
               : posts.map((obj, index) =>
                   posts.length === index + 1 ? (
                     <Post
-                      id={obj._id}
                       title={obj.title}
+                      slug={obj.slug}
                       imageUrl={
                         obj.imageUrl
                           ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
@@ -91,8 +91,8 @@ const Favorites = () => {
                     />
                   ) : (
                     <Post
-                      id={obj._id}
                       title={obj.title}
+                      slug={obj.slug}
                       imageUrl={
                         obj.imageUrl
                           ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`

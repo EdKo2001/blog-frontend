@@ -84,8 +84,8 @@ const MyPosts = () => {
                   posts.length === idx + 1 ? (
                     <Post
                       key={`post${idx}`}
-                      id={obj._id}
                       title={obj.title}
+                      slug={obj.slug}
                       imageUrl={
                         obj.imageUrl
                           ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
@@ -109,8 +109,8 @@ const MyPosts = () => {
                   ) : (
                     <Post
                       key={`post${idx}`}
-                      id={obj._id}
                       title={obj.title}
+                      slug={obj.slug}
                       imageUrl={
                         obj.imageUrl
                           ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`

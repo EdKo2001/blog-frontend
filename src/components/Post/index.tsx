@@ -26,8 +26,8 @@ import styles from "./Post.module.scss";
 const Post: FC<IPost> = forwardRef(
   (
     {
-      id,
       title,
+      slug,
       createdAt,
       imageUrl,
       user,
@@ -53,21 +53,21 @@ const Post: FC<IPost> = forwardRef(
 
     const onClickRemove = () => {
       if (window.confirm("Are you sure you want to delete the article?")) {
-        dispatch(fetchRemovePost(id as number));
+        dispatch(fetchRemovePost(slug!));
         deleteCallback?.();
       }
     };
 
     const like = async () => {
       await axios
-        .put(`/posts/${id}/like`)
+        .put(`/posts/${slug}/like`)
         .then(() => likesCallback?.())
         .catch((err: Error) => console.log(err));
     };
 
     const unlike = async () => {
       await axios
-        .put(`/posts/${id}/unlike`)
+        .put(`/posts/${slug}/unlike`)
         .then(() => likesCallback?.())
         .catch((err: Error) => console.log(err));
     };
@@ -80,7 +80,7 @@ const Post: FC<IPost> = forwardRef(
       >
         {isEditable && (
           <div className={styles.editButtons}>
-            <Link to={`/posts/${id}/edit`}>
+            <Link to={`/posts/${slug}/edit`}>
               <IconButton color="primary">
                 <EditIcon />
               </IconButton>
@@ -103,7 +103,7 @@ const Post: FC<IPost> = forwardRef(
             <h2
               className={clsx(styles.title, { [styles.titleFull]: isFullPost })}
             >
-              {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
+              {isFullPost ? title : <Link to={`/posts/${slug}`}>{title}</Link>}
             </h2>
             {tags && tags.length > 0 && (
               <ul className={styles.tags}>
@@ -124,7 +124,7 @@ const Post: FC<IPost> = forwardRef(
                   </>
                 ) : (
                   <Link
-                    to={`/posts/${id}`}
+                    to={`/posts/${slug}`}
                     style={{
                       color: "rgba(0, 0, 0, 0.87)",
                       textDecoration: "none",
@@ -143,7 +143,7 @@ const Post: FC<IPost> = forwardRef(
                   </>
                 ) : (
                   <Link
-                    to={`/posts/${id}`}
+                    to={`/posts/${slug}`}
                     style={{
                       color: "rgba(0, 0, 0, 0.87)",
                       textDecoration: "none",
@@ -173,7 +173,7 @@ const Post: FC<IPost> = forwardRef(
                   </button>
                 ) : (
                   <Link
-                    to={`/posts/${id}`}
+                    to={`/posts/${slug}`}
                     style={{
                       color: "rgba(0, 0, 0, 0.87)",
                       textDecoration: "none",

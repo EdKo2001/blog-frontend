@@ -1,7 +1,7 @@
 interface IPost {
-  _id?: number;
   id?: number;
   title?: string;
+  slug?: string;
   createdAt?: string;
   imageUrl?: string;
   user?: { _id: number };

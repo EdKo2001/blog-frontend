@@ -23,13 +23,13 @@ const FullPost: FC<IPost> = () => {
   const [isCommentsLoading, setCommentsLoading] = useState(true);
   const [commentsCallback, setCommentsCallback] = useState(true);
   const [likesCallback, setLikesCallback] = useState(true);
-  const { id } = useParams();
+  const { slug } = useParams();
   const isAuth = useAppSelector(selectIsAuth);
   const userData = useAppSelector((state) => state.auth.data);
 
   useEffect(() => {
     axios
-      .get(`/posts/${id}`)
+      .get(`/posts/${slug}`)
       .then((res: any) => {
         setData(res.data);
         setLoading(false);
@@ -42,7 +42,7 @@ const FullPost: FC<IPost> = () => {
 
   useEffect(() => {
     axios
-      .get(`/posts/${id}/comments`)
+      .get(`/posts/${slug}/comments`)
       .then((res: any) => {
         setComments(res.data);
         setCommentsLoading(false);
@@ -55,7 +55,7 @@ const FullPost: FC<IPost> = () => {
 
   useEffect(() => {
     axios
-      .get(`/posts/${id}/likes`)
+      .get(`/posts/${slug}/likes`)
       .then((res: any) => {
         setLikes(res.data);
       })
@@ -73,8 +73,8 @@ const FullPost: FC<IPost> = () => {
     <>
       <SEO title={data?.title} description={data?.text.substring(0, 150)} />
       <Post
-        id={data?._id}
         title={data?.title}
+        slug={data.slug}
         imageUrl={
           data?.imageUrl
             ? `${process.env.REACT_APP_BACKEND_URL}${data?.imageUrl}`
@@ -95,7 +95,7 @@ const FullPost: FC<IPost> = () => {
       <CommentsBlock items={comments} isLoading={isCommentsLoading}>
         {isAuth && (
           <AddComment
-            postId={data?._id}
+            slug={data?.slug}
             callback={() => setCommentsCallback((prevState) => !prevState)}
           />
         )}

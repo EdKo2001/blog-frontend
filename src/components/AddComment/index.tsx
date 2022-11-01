@@ -12,13 +12,7 @@ import { useAppSelector } from "app/hooks";
 
 import styles from "./AddComment.module.scss";
 
-const Index = ({
-  postId,
-  callback,
-}: {
-  postId: number;
-  callback: () => void;
-}) => {
+const Index = ({ slug, callback }: { slug: string; callback: () => void }) => {
   const userData = useAppSelector((state) => state.auth.data);
   const [captchaToken, setCaptchaToken] = useState("");
   const [captchaError, setCaptchaError] = useState(false);
@@ -52,7 +46,7 @@ const Index = ({
     }
     try {
       await axios
-        .put(`/posts/${postId}/comments`, { text, captchaToken })
+        .put(`/posts/${slug}/comments`, { text, captchaToken })
         .then((res: any) => {
           reset();
           callback();

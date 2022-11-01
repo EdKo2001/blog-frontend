@@ -45,9 +45,10 @@ const App = () => {
       <Container maxWidth="lg">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/posts/:id" element={<FullPost />} />
+          <Route path="/posts" element={<Home />} />
+          <Route path="/posts/:slug" element={<FullPost />} />
           <Route
-            path="/posts/:id/edit"
+            path="/posts/:slug/edit"
             element={
               <AuthorRoute>
                 <AddPost />
