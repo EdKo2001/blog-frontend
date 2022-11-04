@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Container from "@mui/material/Container";
 
 import Header from "components/Header";
+import SEO from "components/SEO";
 
 import {
   Home,
@@ -23,7 +24,6 @@ import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
 import { useAppDispatch, useThunkDispatch } from "app/hooks";
 
 import { AdminRoute, AuthorRoute, PrivateRoute } from "utils/routes";
-import SEO from "components/SEO";
 
 const App = () => {
   const dispatch = useThunkDispatch();

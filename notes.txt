@@ -1,7 +1,6 @@
-FEAT: my account
+FIX: home page data fetching
 FEAT: redux toolkit utils
 FEAT: fix error messages displaying
+FEAT: my account
 FEAT: SEARCH for the whole website
 FEAT: SEARCH for the admin
-
-FEAT: posts url by slug

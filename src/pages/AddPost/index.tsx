@@ -76,9 +76,7 @@ const AddPost = () => {
         ? await axios.patch(`/posts/${slug}`, fields)
         : await axios.post("/posts", fields);
 
-      const _islugd = isEditing ? slug : data.slug;
-
-      navigate(`/posts/${slug}`);
+      navigate(`/posts/${isEditing ? slug : data.slug}`);
     } catch (err) {
       console.warn(err);
       alert("Error getting article!");

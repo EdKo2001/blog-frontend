@@ -77,8 +77,8 @@ const Favorites = () => {
                       user={obj.user}
                       createdAt={obj.createdAt}
                       viewsCount={obj.viewsCount}
-                      commentsCount={obj.comments?.length}
-                      likesCount={obj.likes?.length}
+                      commentsCount={obj.commentsCount}
+                      likesCount={obj.likesCount}
                       isLiked={obj.likes?.some(
                         (like: any) => like.user === userData?._id
                       )}
@@ -101,8 +101,8 @@ const Favorites = () => {
                       user={obj.user}
                       createdAt={obj.createdAt}
                       viewsCount={obj.viewsCount}
-                      commentsCount={obj.comments?.length}
-                      likesCount={obj.likes?.length}
+                      commentsCount={obj.commentsCount}
+                      likesCount={obj.likesCount}
                       isLiked={obj.likes?.some(
                         (like: any) => like.user === userData?._id
                       )}
