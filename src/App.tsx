@@ -20,7 +20,7 @@ const AddPost = lazy(() => import("./pages/AddPost"));
 const Login = lazy(() => import("./pages/Login"));
 const MyPosts = lazy(() => import("./pages/MyPosts"));
 const Favorites = lazy(() => import("./pages/Favorites"));
-const Admin = lazy(() => import("./pages/Favorites"));
+const Admin = lazy(() => import("./pages/Admin"));
 const MyAccount = lazy(() => import("./pages/MyAccount"));
 
 const App = () => {

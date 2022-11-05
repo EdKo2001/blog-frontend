@@ -18,12 +18,12 @@ const TagsBlock: FC<ITagsBlock> = memo(({ tags, isLoading = true }) => {
     <SideBlock title="Popular Tags">
       <List>
         {(isLoading ? [...Array(10)] : tags).map((name, i) => (
-          <Link
-            to={`/tag/${name}`}
-            style={{ textDecoration: "none", color: "black" }}
-            key={i}
-          >
-            <ListItem disablePadding>
+          <ListItem disablePadding>
+            <Link
+              to={`/tag/${name}`}
+              style={{ textDecoration: "none", color: "black" }}
+              key={i}
+            >
               <ListItemButton>
                 <ListItemIcon>
                   <TagIcon />
@@ -34,8 +34,8 @@ const TagsBlock: FC<ITagsBlock> = memo(({ tags, isLoading = true }) => {
                   <ListItemText primary={name} />
                 )}
               </ListItemButton>
-            </ListItem>
-          </Link>
+            </Link>
+          </ListItem>
         ))}
       </List>
     </SideBlock>

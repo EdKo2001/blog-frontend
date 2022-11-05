@@ -74,12 +74,16 @@ const Post: FC<IPost> = forwardRef(
       >
         {isEditable && (
           <div className={styles.editButtons}>
-            <Link to={`/posts/${slug}/edit`}>
-              <IconButton color="primary">
+            <Link to={`/posts/${slug}/edit`} aria-label="Edit Post">
+              <IconButton color="primary" aria-label="Edit Post">
                 <EditIcon />
               </IconButton>
             </Link>
-            <IconButton onClick={onClickRemove} color="secondary">
+            <IconButton
+              onClick={onClickRemove}
+              color="secondary"
+              aria-label="Delete Post"
+            >
               <DeleteIcon />
             </IconButton>
           </div>

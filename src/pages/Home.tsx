@@ -150,7 +150,11 @@ const Home = () => {
       )}
       <Grid container spacing={4}>
         {isPostsLoading && posts.length === 0 ? (
-          [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)
+          <Grid xs={8} item>
+            {[...Array(limit)].map((_, idx) => (
+              <Post key={idx} isLoading />
+            ))}
+          </Grid>
         ) : (
           <Grid xs={8} item>
             {posts.length === 0 ? (
@@ -216,7 +220,7 @@ const Home = () => {
         )}
         <Grid xs={4} item>
           <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
-        </Grid>{" "}
+        </Grid>
       </Grid>
     </>
   );

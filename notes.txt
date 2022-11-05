@@ -5,8 +5,7 @@ FIX: Likes
 FEAT: my account
 FEAT: Optimization {
     Code Refactoring: getting posts
-    Accessibility
-    Performance
+    Accessibility (check mobile in the future)
 }
 FEAT: Adaptation
 ---------------------------------------

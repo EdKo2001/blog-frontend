@@ -82,7 +82,6 @@ $blue: #4361ee;
     display: inline-block;
     font-size: 14px;
     margin-right: 15px;
-    opacity: 0.5;
 
     &:hover {
       opacity: 1;
@@ -90,22 +89,29 @@ $blue: #4361ee;
 
     a {
       text-decoration: none;
-      color: #000;
+      color: rgba(0, 0, 0, 0.8);
     }
   }
 }
 
 .postDetails {
+  display: flex;
   list-style: none;
   padding: 0;
   margin: 20px 0 0 0;
 
   li {
-    display: inline-flex;
-    align-items: center;
-    font-size: 14px;
     margin-right: 20px;
-    opacity: 0.5;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 0;
+    }
 
     svg {
       font-size: 18px;
