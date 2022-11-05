@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
+import axios from "../utils/axios";
+
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
@@ -13,17 +15,25 @@ import { fetchPosts, fetchTags } from "features/posts/postsSlice";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
+import IPost from "types/Post.interface";
+
 const Home = () => {
+  const { slug } = useParams();
+
   const dispatch = useThunkDispatch();
   const userData = useAppSelector((state) => state.auth.data);
-  const { posts, tags } = useAppSelector((state) => state.posts);
-  const [tabIndex, setTabIndex] = useState(0);
-  const { slug } = useParams();
-  const [pageNumber, setPageNumber] = useState(1);
-  const limit = 4;
-  const [pageTitle, setPageTitle] = useState("Latest Posts");
+  const { tags } = useAppSelector((state) => state.posts);
 
-  const isPostsLoading = posts.status === "loading";
+  const [postsData, setPostsData] = useState([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
+  const [isPostsLoading, setPostsLoading] = useState(true);
+  const [pageTitle, setPageTitle] = useState("Latest Posts");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const limit = 4;
+
+  // const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
 
   const handleTabChange = (e: any, newTabIndex: number) => {
@@ -38,15 +48,33 @@ const Home = () => {
   }, [slug]);
 
   useEffect(() => {
+    setPostsData([]);
+    setPosts([]);
+  }, [slug, tabIndex]);
+
+  useEffect(() => {
+    const getPosts = async (options: string) => {
+      setPostsLoading(true);
+      try {
+        const result = await axios.get(`/posts?${options}`);
+        setPostsData(result.data);
+        setPosts((prevPosts) => prevPosts.concat(result.data.results));
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setPostsLoading(false);
+      }
+    };
+
     if (slug) {
-      dispatch(fetchPosts({ tag: slug, page: pageNumber, limit }));
+      getPosts(`tag=${slug}&page=${pageNumber}&limit=${limit}`);
     } else {
       if (tabIndex === 1) {
-        dispatch(fetchPosts({ popular: true, page: pageNumber, limit }));
+        getPosts(`popular&page=${pageNumber}&limit=${limit}`);
       } else if (tabIndex === 2) {
-        dispatch(fetchPosts({ relevant: true, page: pageNumber, limit }));
+        getPosts(`relevant&page=${pageNumber}&limit=${limit}`);
       } else {
-        dispatch(fetchPosts({ page: pageNumber, limit }));
+        getPosts(`page=${pageNumber}&limit=${limit}`);
       }
     }
   }, [tabIndex, slug, pageNumber]);
@@ -61,13 +89,15 @@ const Home = () => {
       if (isPostsLoading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && posts.items.next) {
+        //@ts-ignore
+        if (entries[0].isIntersecting && postsData.next) {
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
       });
       if (node) observer.current.observe(node);
     },
-    [isPostsLoading, posts.items.next]
+    //@ts-ignore
+    [isPostsLoading, postsData.next]
   );
 
   return (
@@ -92,11 +122,11 @@ const Home = () => {
       )}
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {posts.items.results.length === 0 ? (
+          {posts.length === 0 ? (
             <>No articles</>
           ) : (
-            posts.items.results.map((obj, idx) =>
-              posts.items.results.length === idx + 1 ? (
+            posts.map((obj, idx) =>
+              posts.length === idx + 1 ? (
                 <Post
                   title={obj.title}
                   slug={obj.slug}

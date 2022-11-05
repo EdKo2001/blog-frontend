@@ -1,6 +1,12 @@
-FIX: home page data fetching
+High Priority
 FEAT: redux toolkit utils
 FEAT: fix error messages displaying
+
 FEAT: my account
+FEAT: Optimization (getting posts)
+---------------------------------------
+Medium Priority
 FEAT: SEARCH for the whole website
 FEAT: SEARCH for the admin
+---------------------------------------
+Low Priority
