@@ -6,7 +6,7 @@ import React, {
   useEffect,
   ChangeEvent,
 } from "react";
-import { useNavigate, Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import SimpleMDE from "react-simplemde-editor";
 
@@ -15,12 +15,11 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
 import SEO from "components/SEO";
+import ErrorText from "components/ErrorText";
 
 import axios from "utils/axios";
 
 import { useAppSelector } from "app/hooks";
-
-import { selectIsAuth } from "features/auth/authSlice";
 
 import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
@@ -28,12 +27,17 @@ import styles from "./AddPost.module.scss";
 const AddPost = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+
   const authData = useAppSelector((state) => state.auth?.data);
+
   const [text, setText] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [status, setStatus] = useState("published");
+  const [errors, setErrors] = useState({});
+  const [imageErrorText, setImageErrorText] = useState("");
+
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const isEditing = Boolean(slug);
@@ -48,9 +52,10 @@ const AddPost = () => {
       formData.append("image", file);
       const { data } = await axios.post("/upload", formData);
       setImageUrl(data.url);
+      setImageErrorText("");
     } catch (err) {
       console.warn(err);
-      alert("File upload error!");
+      setImageErrorText(err.response.data.message);
     }
   };
 
@@ -76,10 +81,16 @@ const AddPost = () => {
         ? await axios.patch(`/posts/${slug}`, fields)
         : await axios.post("/posts", fields);
 
+      setErrors({});
+
       navigate(`/posts/${isEditing ? slug : data.slug}`);
     } catch (err) {
       console.warn(err);
-      alert("Error getting article!");
+      setErrors(
+        err.response.data.errors
+          ? err.response.data.errors
+          : { message: err.response.data.message }
+      );
     }
   };
 
@@ -99,7 +110,6 @@ const AddPost = () => {
         })
         .catch((err: Error) => {
           console.warn(err);
-          alert("Such Article doesn't exist");
           setTimeout(() => {
             navigate("/my-posts");
           }, 1000);
@@ -151,6 +161,7 @@ const AddPost = () => {
           />
         </>
       )}
+      <ErrorText text={imageErrorText} />
       <br />
       <br />
       <TextField
@@ -159,6 +170,10 @@ const AddPost = () => {
         classes={{ root: styles.title }}
         variant="standard"
         placeholder="Article title..."
+        //@ts-ignore
+        error={Boolean(errors?.title)}
+        //@ts-ignore
+        helperText={errors?.title}
         fullWidth
         required
       />
@@ -175,6 +190,14 @@ const AddPost = () => {
         value={text}
         onChange={onChange}
         options={options}
+      />
+      <ErrorText
+        //@ts-ignore
+        text={errors?.text}
+      />
+      <ErrorText
+        //@ts-ignore
+        text={errors?.message}
       />
       <div className={styles.buttons}>
         <Button

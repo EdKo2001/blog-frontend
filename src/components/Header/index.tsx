@@ -16,10 +16,8 @@ const Header = () => {
   const userData = useAppSelector((state) => state.auth.data);
 
   const onClickLogout = () => {
-    if (window.confirm("Вы действительно хотите выйти?")) {
-      dispatch(logout());
-      window.localStorage.removeItem("token");
-    }
+    dispatch(logout());
+    window.localStorage.removeItem("token");
   };
 
   return (

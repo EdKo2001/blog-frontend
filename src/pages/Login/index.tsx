@@ -9,12 +9,13 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 
 import SEO from "components/SEO";
+import ErrorText from "components/ErrorText";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
 import {
   selectAuthErrors,
-  fetchAuth,
+  authLogin,
   selectIsAuth,
 } from "features/auth/authSlice";
 
@@ -25,25 +26,19 @@ const Login = () => {
   const authErrors = useAppSelector(selectAuthErrors);
   const dispatch = useThunkDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isValid },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
   const onSubmit = async (values: any) => {
     try {
-      const data = await dispatch(fetchAuth(values));
-
-      if (!data.payload) {
-        return alert("Failed to login!");
-      }
-
-      if ("token" in data.payload) {
-        window.localStorage.setItem("token", data.payload.token);
-      }
+      await dispatch(authLogin(values))
+        .then((res) => {
+          if ("token" in res.payload) {
+            window.localStorage.setItem("token", res.payload.token);
+          }
+        })
+        .catch((err) => console.warn(err));
     } catch (error) {
       console.log(error);
     }
@@ -68,22 +63,20 @@ const Login = () => {
           type="email"
           {...register("email", { required: "Email is required" })}
           fullWidth
+          required
         />
         <TextField
           className={styles.field}
           label="Password"
           error={Boolean(authErrors?.password)}
           helperText={authErrors?.password}
+          type="password"
           {...register("password", { required: "Password is required" })}
           fullWidth
+          required
         />
-        <Button
-          disabled={!isValid}
-          type="submit"
-          size="large"
-          variant="contained"
-          fullWidth
-        >
+        <ErrorText text={authErrors?.message} style={{ textAlign: "center" }} />
+        <Button type="submit" size="large" variant="contained" fullWidth>
           Sign In
         </Button>
       </form>

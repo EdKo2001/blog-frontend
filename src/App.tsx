@@ -19,7 +19,7 @@ import {
   MyAccount,
 } from "./pages";
 
-import { fetchAuthMe, resetErrors } from "features/auth/authSlice";
+import { authLoginMe, resetErrors } from "features/auth/authSlice";
 
 import { useAppDispatch, useThunkDispatch } from "app/hooks";
 
@@ -31,7 +31,7 @@ const App = () => {
   const location = useLocation();
 
   useEffect(() => {
-    dispatch(fetchAuthMe());
+    dispatch(authLoginMe());
   }, []);
 
   useEffect(() => {
@@ -101,11 +101,14 @@ const App = () => {
           <Route
             path="*"
             element={
-              <img
-                src="./404.png"
-                alt="page not found"
-                style={{ display: "block", margin: "auto" }}
-              />
+              <>
+                <h1 style={{ textAlign: "center" }}>Page Not Found</h1>
+                <img
+                  src="/404.png"
+                  alt="page not found 404"
+                  style={{ display: "block", margin: "auto" }}
+                />
+              </>
             }
           />
         </Routes>

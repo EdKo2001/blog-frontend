@@ -10,12 +10,13 @@ import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 
 import SEO from "components/SEO";
+import ErrorText from "components/ErrorText";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
 import {
   selectAuthErrors,
-  fetchRegister,
+  authRegister,
   selectIsAuth,
 } from "features/auth/authSlice";
 
@@ -25,23 +26,23 @@ const Registration = () => {
   const isAuth = useAppSelector(selectIsAuth);
   const authErrors = useAppSelector(selectAuthErrors);
   const dispatch = useThunkDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { isValid },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
   const onSubmit = async (values: any) => {
-    const data = await dispatch(fetchRegister(values));
+    try {
+      const data = await dispatch(authRegister(values));
 
-    if (!data.payload) {
-      return alert("Failed to register!");
-    }
+      if (!data.payload) {
+        return alert("Failed to register!");
+      }
 
-    if ("token" in data.payload) {
-      window.localStorage.setItem("token", data.payload.token);
+      if ("token" in data.payload) {
+        window.localStorage.setItem("token", data.payload.token);
+      }
+    } catch (err) {
+      console.warn(err);
     }
   };
 
@@ -66,6 +67,7 @@ const Registration = () => {
           className={styles.field}
           label="Full name"
           fullWidth
+          required
         />
         <TextField
           error={Boolean(authErrors?.email)}
@@ -75,6 +77,7 @@ const Registration = () => {
           className={styles.field}
           label="Email"
           fullWidth
+          required
         />
         <TextField
           error={Boolean(authErrors?.password)}
@@ -84,14 +87,10 @@ const Registration = () => {
           className={styles.field}
           label="Password"
           fullWidth
+          required
         />
-        <Button
-          disabled={!isValid}
-          type="submit"
-          size="large"
-          variant="contained"
-          fullWidth
-        >
+        <ErrorText text={authErrors?.message} style={{ textAlign: "center" }} />
+        <Button type="submit" size="large" variant="contained" fullWidth>
           Register
         </Button>
       </form>

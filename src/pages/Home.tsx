@@ -11,7 +11,7 @@ import Post from "components/Post";
 import TagsBlock from "components/TagsBlock";
 import SEO from "components/SEO";
 
-import { fetchPosts, fetchTags } from "features/posts/postsSlice";
+import { fetchTags } from "features/posts/postsSlice";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
@@ -120,65 +120,69 @@ const Home = () => {
           <Tab label={slug} />
         </Tabs>
       )}
-      <Grid container spacing={4}>
-        <Grid xs={8} item>
-          {posts.length === 0 ? (
-            <>No articles</>
-          ) : (
-            posts.map((obj, idx) =>
-              posts.length === idx + 1 ? (
-                <Post
-                  title={obj.title}
-                  slug={obj.slug}
-                  imageUrl={
-                    obj.imageUrl
-                      ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
-                      : ""
-                  }
-                  user={obj.user}
-                  createdAt={obj.createdAt}
-                  viewsCount={obj.viewsCount}
-                  commentsCount={obj.commentsCount}
-                  likesCount={obj.likesCount}
-                  isLiked={obj.likes?.some(
-                    (like: any) => like.user === userData?._id
-                  )}
-                  tags={obj.tags}
-                  isEditable={userData?._id === obj.user?._id}
-                  ref={lastPostRef}
-                  key={`post${idx}`}
-                />
-              ) : (
-                <Post
-                  title={obj.title}
-                  slug={obj.slug}
-                  imageUrl={
-                    obj.imageUrl
-                      ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
-                      : ""
-                  }
-                  user={obj.user}
-                  createdAt={obj.createdAt}
-                  viewsCount={obj.viewsCount}
-                  commentsCount={obj.commentsCount}
-                  likesCount={obj.likesCount}
-                  isLiked={obj.likes?.some(
-                    (like: any) => like.user === userData?._id
-                  )}
-                  tags={obj.tags}
-                  isEditable={userData?._id === obj.user?._id}
-                  key={`post${idx}`}
-                />
+      {isPostsLoading && posts.length === 0 ? (
+        [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)
+      ) : (
+        <Grid container spacing={4}>
+          <Grid xs={8} item>
+            {posts.length === 0 ? (
+              <>No articles</>
+            ) : (
+              posts.map((obj, idx) =>
+                posts.length === idx + 1 ? (
+                  <Post
+                    title={obj.title}
+                    slug={obj.slug}
+                    imageUrl={
+                      obj.imageUrl
+                        ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
+                        : ""
+                    }
+                    user={obj.user}
+                    createdAt={obj.createdAt}
+                    viewsCount={obj.viewsCount}
+                    commentsCount={obj.commentsCount}
+                    likesCount={obj.likesCount}
+                    isLiked={obj.likes?.some(
+                      (like: any) => like.user === userData?._id
+                    )}
+                    tags={obj.tags}
+                    isEditable={userData?._id === obj.user?._id}
+                    ref={lastPostRef}
+                    key={`post${idx}`}
+                  />
+                ) : (
+                  <Post
+                    title={obj.title}
+                    slug={obj.slug}
+                    imageUrl={
+                      obj.imageUrl
+                        ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
+                        : ""
+                    }
+                    user={obj.user}
+                    createdAt={obj.createdAt}
+                    viewsCount={obj.viewsCount}
+                    commentsCount={obj.commentsCount}
+                    likesCount={obj.likesCount}
+                    isLiked={obj.likes?.some(
+                      (like: any) => like.user === userData?._id
+                    )}
+                    tags={obj.tags}
+                    isEditable={userData?._id === obj.user?._id}
+                    key={`post${idx}`}
+                  />
+                )
               )
-            )
-          )}
-          {isPostsLoading &&
-            [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)}
+            )}
+            {isPostsLoading &&
+              [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)}
+          </Grid>
+          <Grid xs={4} item>
+            <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
+          </Grid>
         </Grid>
-        <Grid xs={4} item>
-          <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
-        </Grid>
-      </Grid>
+      )}
     </>
   );
 };

@@ -2,39 +2,42 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "utils/axios";
 
-export const fetchAuth = createAsyncThunk(
-  "auth/fetchAuth",
+export const authLogin = createAsyncThunk(
+  "auth/authLogin",
   async (params: any, thunkAPI: any) => {
     try {
       const { data } = await axios.post("/auth/login", params);
-      console.log(data);
       return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.errors);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        err.response.data.errors ? err.response.data.errors : err.response.data
+      );
     }
   }
 );
 
-export const fetchRegister = createAsyncThunk(
-  "auth/fetchRegister",
+export const authRegister = createAsyncThunk(
+  "auth/authRegister",
   async (params: any, thunkAPI: any) => {
     try {
       const { data } = await axios.post("/auth/register", params);
       return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.errors);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        err.response.data.errors ? err.response.data.errors : err.response.data
+      );
     }
   }
 );
 
-export const fetchAuthMe = createAsyncThunk(
-  "auth/fetchAuthMe",
+export const authLoginMe = createAsyncThunk(
+  "auth/authLoginMe",
   async (_, thunkAPI: any) => {
     try {
       const { data } = await axios.get("/auth/user");
       return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
@@ -57,40 +60,41 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAuth.pending, (state) => {
+    builder.addCase(authLogin.pending, (state) => {
       state.status = "loading";
       state.data = null;
     });
-    builder.addCase(fetchAuth.fulfilled, (state, { payload }) => {
+    builder.addCase(authLogin.fulfilled, (state, { payload }) => {
       state.status = "loaded";
       state.data = payload;
     });
-    builder.addCase(fetchAuth.rejected, (state, { payload }) => {
+    builder.addCase(authLogin.rejected, (state, { payload }) => {
       state.status = "error";
       state.data = null;
       state.errors = payload;
+      console.log(payload);
     });
-    builder.addCase(fetchAuthMe.pending, (state) => {
+    builder.addCase(authLoginMe.pending, (state) => {
       state.status = "loading";
       state.data = null;
     });
-    builder.addCase(fetchAuthMe.fulfilled, (state, { payload }) => {
+    builder.addCase(authLoginMe.fulfilled, (state, { payload }) => {
       state.status = "loaded";
       state.data = payload;
     });
-    builder.addCase(fetchAuthMe.rejected, (state) => {
+    builder.addCase(authLoginMe.rejected, (state) => {
       state.status = "error";
       state.data = null;
     });
-    builder.addCase(fetchRegister.pending, (state) => {
+    builder.addCase(authRegister.pending, (state) => {
       state.status = "loading";
       state.data = null;
     });
-    builder.addCase(fetchRegister.fulfilled, (state, { payload }) => {
+    builder.addCase(authRegister.fulfilled, (state, { payload }) => {
       state.status = "loaded";
       state.data = payload;
     });
-    builder.addCase(fetchRegister.rejected, (state, { payload }) => {
+    builder.addCase(authRegister.rejected, (state, { payload }) => {
       state.status = "error";
       state.data = null;
       state.errors = payload;
