@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
@@ -7,23 +7,21 @@ import Container from "@mui/material/Container";
 import Header from "components/Header";
 import SEO from "components/SEO";
 
-import {
-  Home,
-  FullPost,
-  Registration,
-  AddPost,
-  Login,
-  MyPosts,
-  Favorites,
-  Admin,
-  MyAccount,
-} from "./pages";
-
 import { authLoginMe, resetErrors } from "features/auth/authSlice";
 
 import { useAppDispatch, useThunkDispatch } from "app/hooks";
 
 import { AdminRoute, AuthorRoute, PrivateRoute } from "utils/routes";
+
+const Home = lazy(() => import("./pages/Home"));
+const FullPost = lazy(() => import("./pages/FullPost"));
+const Registration = lazy(() => import("./pages/Registration"));
+const AddPost = lazy(() => import("./pages/AddPost"));
+const Login = lazy(() => import("./pages/Login"));
+const MyPosts = lazy(() => import("./pages/MyPosts"));
+const Favorites = lazy(() => import("./pages/Favorites"));
+const Admin = lazy(() => import("./pages/Favorites"));
+const MyAccount = lazy(() => import("./pages/MyAccount"));
 
 const App = () => {
   const dispatch = useThunkDispatch();
@@ -44,71 +42,125 @@ const App = () => {
       <Header />
       <Container maxWidth="lg">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/posts" element={<Home />} />
-          <Route path="/posts/:slug" element={<FullPost />} />
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/posts"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/posts/:slug"
+            element={
+              <Suspense>
+                <FullPost />
+              </Suspense>
+            }
+          />
           <Route
             path="/posts/:slug/edit"
             element={
-              <AuthorRoute>
-                <AddPost />
-              </AuthorRoute>
+              <Suspense>
+                <AuthorRoute>
+                  <AddPost />
+                </AuthorRoute>
+              </Suspense>
             }
           />
           <Route
             path="/add-post"
             element={
-              <AuthorRoute>
-                <AddPost />
-              </AuthorRoute>
+              <Suspense>
+                <AuthorRoute>
+                  <AddPost />
+                </AuthorRoute>
+              </Suspense>
             }
           />
           <Route
             path="/my-posts"
             element={
-              <AuthorRoute>
-                <MyPosts />
-              </AuthorRoute>
+              <Suspense>
+                <AuthorRoute>
+                  <MyPosts />
+                </AuthorRoute>
+              </Suspense>
             }
           />
           <Route
             path="/favorites"
             element={
-              <PrivateRoute>
-                <Favorites />
-              </PrivateRoute>
+              <Suspense>
+                <PrivateRoute>
+                  <Favorites />
+                </PrivateRoute>
+              </Suspense>
             }
           />
           <Route
             path="/my-account"
             element={
-              <PrivateRoute>
-                <MyAccount />
-              </PrivateRoute>
+              <Suspense>
+                <PrivateRoute>
+                  <MyAccount />
+                </PrivateRoute>
+              </Suspense>
             }
           />
-          <Route path="/tag/:slug" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Registration />} />
+          <Route
+            path="/tag/:slug"
+            element={
+              <Suspense>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense>
+                <Login />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Suspense>
+                <Registration />
+              </Suspense>
+            }
+          />
           <Route
             path="/admin"
             element={
-              <AdminRoute>
-                <Admin />
-              </AdminRoute>
+              <Suspense>
+                <AdminRoute>
+                  <Admin />
+                </AdminRoute>
+              </Suspense>
             }
           />
           <Route
             path="*"
             element={
-              <>
+              <Suspense>
                 <h1 style={{ textAlign: "center" }}>Page Not Found</h1>
                 <img
                   src="/404.png"
                   alt="page not found 404"
                   style={{ display: "block", margin: "auto" }}
                 />
-              </>
+              </Suspense>
             }
           />
         </Routes>

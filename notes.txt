@@ -1,5 +1,6 @@
 High Priority
 FIX: Latest Post
+FIX: Likes
 
 FEAT: my account
 FEAT: Optimization {

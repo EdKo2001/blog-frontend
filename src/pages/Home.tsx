@@ -148,10 +148,10 @@ const Home = () => {
           <Tab label={slug} />
         </Tabs>
       )}
-      {isPostsLoading && posts.length === 0 ? (
-        [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)
-      ) : (
-        <Grid container spacing={4}>
+      <Grid container spacing={4}>
+        {isPostsLoading && posts.length === 0 ? (
+          [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)
+        ) : (
           <Grid xs={8} item>
             {posts.length === 0 ? (
               <>No articles</>
@@ -213,11 +213,11 @@ const Home = () => {
             {isPostsLoading &&
               [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)}
           </Grid>
-          <Grid xs={4} item>
-            <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
-          </Grid>
-        </Grid>
-      )}
+        )}
+        <Grid xs={4} item>
+          <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
+        </Grid>{" "}
+      </Grid>
     </>
   );
 };

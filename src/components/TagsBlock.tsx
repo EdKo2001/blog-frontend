@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Link } from "react-router-dom";
 
 import List from "@mui/material/List";
@@ -13,7 +13,7 @@ import SideBlock from "./SideBlock";
 
 import ITagsBlock from "types/TagsBlock.interface";
 
-const TagsBlock: FC<ITagsBlock> = ({ tags, isLoading = true }) => {
+const TagsBlock: FC<ITagsBlock> = memo(({ tags, isLoading = true }) => {
   return (
     <SideBlock title="Popular Tags">
       <List>
@@ -40,6 +40,6 @@ const TagsBlock: FC<ITagsBlock> = ({ tags, isLoading = true }) => {
       </List>
     </SideBlock>
   );
-};
+});
 
 export default TagsBlock;

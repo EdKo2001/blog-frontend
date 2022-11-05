@@ -7,7 +7,7 @@ import SEO from "components/SEO";
 
 import { useAppSelector } from "app/hooks";
 
-import axios from "../../utils/axios";
+import axios from "../utils/axios";
 
 import IPost from "types/Post.interface";
 
