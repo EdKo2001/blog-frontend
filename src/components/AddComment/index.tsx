@@ -79,7 +79,7 @@ const Index = ({ slug, callback }: { slug: string; callback: () => void }) => {
             onChange={(value: string) => (
               setCaptchaToken(value), setCaptchaError(false)
             )}
-            style={{ marginTop: 30, marginBottom: 10 }}
+            className={styles.captcha}
           />
           {captchaError && (
             <p style={{ color: "red", margin: 0 }}>Please solve the captcha</p>

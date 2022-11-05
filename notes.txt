@@ -1,13 +1,14 @@
 High Priority
-FIX: Latest Post
-FIX: Likes
-
-FEAT: my account
 FEAT: Optimization {
     Code Refactoring: getting posts
     Accessibility (check mobile in the future)
 }
-FEAT: Adaptation
+FEAT: Adaptation (remains navigation)
+
+FIX: Latest Post
+FIX: Likes
+
+FEAT: my account
 ---------------------------------------
 Medium Priority
 FEAT: SEARCH for the whole website

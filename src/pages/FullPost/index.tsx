@@ -15,6 +15,8 @@ import { selectIsAuth } from "features/auth/authSlice";
 
 import IPost from "types/Post.interface";
 
+import styles from "./FullPost.module.scss";
+
 const FullPost: FC<IPost> = () => {
   const [data, setData] = useState<any>();
   const [comments, setComments] = useState([]);
@@ -90,7 +92,7 @@ const FullPost: FC<IPost> = () => {
         tags={data?.tags}
         isFullPost
       >
-        <ReactMarkdown children={data?.text} />
+        <ReactMarkdown children={data?.text} className={styles.reactMarkDown} />
       </Post>
       <CommentsBlock items={comments} isLoading={isCommentsLoading}>
         {isAuth && (

@@ -15,6 +15,8 @@ import { fetchTags } from "features/tags/tagsSlice";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
+import useMediaQuery from "../hooks/useMediaQuery";
+
 import IPost from "types/Post.interface";
 
 const Home = () => {
@@ -31,6 +33,8 @@ const Home = () => {
   const [pageTitle, setPageTitle] = useState("Latest Posts");
   const [pageNumber, setPageNumber] = useState(1);
   const [tabIndex, setTabIndex] = useState(0);
+
+  const isTablet = useMediaQuery("(min-width: 800px)");
 
   const limit = 4;
 
@@ -131,6 +135,11 @@ const Home = () => {
   return (
     <>
       <SEO title={pageTitle} />
+      {!isTablet && (
+        <Grid xs={12} item>
+          <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
+        </Grid>
+      )}
       {!slug && (
         <Tabs
           style={{ marginBottom: 15 }}
@@ -150,13 +159,13 @@ const Home = () => {
       )}
       <Grid container spacing={4}>
         {isPostsLoading && posts.length === 0 ? (
-          <Grid xs={8} item>
+          <Grid md={8} xs={12} item>
             {[...Array(limit)].map((_, idx) => (
               <Post key={idx} isLoading />
             ))}
           </Grid>
         ) : (
-          <Grid xs={8} item>
+          <Grid md={8} xs={12} item>
             {posts.length === 0 ? (
               <>No articles</>
             ) : (
@@ -218,9 +227,11 @@ const Home = () => {
               [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)}
           </Grid>
         )}
-        <Grid xs={4} item>
-          <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
-        </Grid>
+        {isTablet && (
+          <Grid md={4} item>
+            <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
+          </Grid>
+        )}
       </Grid>
     </>
   );
