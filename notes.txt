@@ -1,5 +1,5 @@
 High Priority
-FEAT: redux toolkit utils
+FIX: Latest Post
 
 FEAT: my account
 FEAT: Optimization {
@@ -7,6 +7,7 @@ FEAT: Optimization {
     Accessibility
     Performance
 }
+FEAT: Adaptation
 ---------------------------------------
 Medium Priority
 FEAT: SEARCH for the whole website

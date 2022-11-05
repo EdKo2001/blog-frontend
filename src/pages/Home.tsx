@@ -11,7 +11,7 @@ import Post from "components/Post";
 import TagsBlock from "components/TagsBlock";
 import SEO from "components/SEO";
 
-import { fetchTags } from "features/posts/postsSlice";
+import { fetchTags } from "features/tags/tagsSlice";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
@@ -22,11 +22,12 @@ const Home = () => {
 
   const dispatch = useThunkDispatch();
   const userData = useAppSelector((state) => state.auth.data);
-  const { tags } = useAppSelector((state) => state.posts);
+  const { tags } = useAppSelector((state) => state.tags);
 
   const [postsData, setPostsData] = useState([]);
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isPostsLoading, setPostsLoading] = useState(true);
+  const [deleteCallback, setDeleteCallback] = useState(true);
   const [pageTitle, setPageTitle] = useState("Latest Posts");
   const [pageNumber, setPageNumber] = useState(1);
   const [tabIndex, setTabIndex] = useState(0);
@@ -78,6 +79,33 @@ const Home = () => {
       }
     }
   }, [tabIndex, slug, pageNumber]);
+
+  useEffect(() => {
+    const getPosts = async (options?: string) => {
+      setPostsLoading(true);
+      try {
+        const result = await axios.get(`/posts${options ? "/" + options : ""}`);
+        setPostsData(result.data);
+        setPosts((prevPosts) => prevPosts.concat(result.data.results));
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setPostsLoading(false);
+      }
+    };
+
+    if (slug) {
+      getPosts(`tag=${slug}`);
+    } else {
+      if (tabIndex === 1) {
+        getPosts(`popular`);
+      } else if (tabIndex === 2) {
+        getPosts(`relevant`);
+      } else {
+        getPosts();
+      }
+    }
+  }, [deleteCallback]);
 
   useEffect(() => {
     dispatch(fetchTags());
@@ -147,6 +175,10 @@ const Home = () => {
                       (like: any) => like.user === userData?._id
                     )}
                     tags={obj.tags}
+                    deleteCallback={() => (
+                      console.log("worked"),
+                      setDeleteCallback((prevState) => !prevState)
+                    )}
                     isEditable={userData?._id === obj.user?._id}
                     ref={lastPostRef}
                     key={`post${idx}`}
@@ -169,6 +201,9 @@ const Home = () => {
                       (like: any) => like.user === userData?._id
                     )}
                     tags={obj.tags}
+                    deleteCallback={() =>
+                      setDeleteCallback((prevState) => !prevState)
+                    }
                     isEditable={userData?._id === obj.user?._id}
                     key={`post${idx}`}
                   />

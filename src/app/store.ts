@@ -6,14 +6,11 @@ import { ThunkDispatch } from "redux-thunk";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
-import { postsReducer } from "features/posts/postsSlice";
+import { tagsReducer } from "features/tags/tagsSlice";
 import { authReducer } from "features/auth/authSlice";
 
 const store = configureStore({
-  reducer: {
-    posts: postsReducer,
-    auth: authReducer,
-  },
+  reducer: { auth: authReducer, tags: tagsReducer },
   middleware: [thunk, logger],
 });
 

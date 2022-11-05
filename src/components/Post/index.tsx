@@ -15,10 +15,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import UserInfo from "../UserInfo";
 import PostSkeleton from "./PostSkeleton";
 
-import { useThunkDispatch } from "app/hooks";
-
-import { fetchRemovePost } from "features/posts/postsSlice";
-
 import IPost from "types/Post.interface";
 
 import styles from "./Post.module.scss";
@@ -45,17 +41,15 @@ const Post: FC<IPost> = forwardRef(
     },
     ref
   ) => {
-    const dispatch = useThunkDispatch();
-
     if (isLoading) {
       return <PostSkeleton />;
     }
 
-    const onClickRemove = () => {
-      if (window.confirm("Are you sure you want to delete the article?")) {
-        dispatch(fetchRemovePost(slug!));
-        deleteCallback?.();
-      }
+    const onClickRemove = async () => {
+      await axios
+        .delete(`/posts/${slug}`)
+        .then(() => deleteCallback?.())
+        .catch((err: Error) => console.log(err));
     };
 
     const like = async () => {
