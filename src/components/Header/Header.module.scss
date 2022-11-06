@@ -35,3 +35,12 @@
     text-decoration: none;
   }
 }
+
+@media (max-width: 800px) {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 30px;
+  }
+}

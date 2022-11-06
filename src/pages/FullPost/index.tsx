@@ -69,8 +69,6 @@ const FullPost: FC<IPost> = () => {
     return <Post isLoading={isLoading} isFullPost />;
   }
 
-  console.log(likes, userData);
-
   return (
     <>
       <SEO title={data?.title} description={data?.text.substring(0, 150)} />

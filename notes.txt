@@ -1,14 +1,10 @@
 High Priority
 FEAT: Optimization {
     Code Refactoring: getting posts
-    Accessibility (check mobile in the future)
 }
-FEAT: Adaptation (remains navigation)
-
-FEAT: my account
+FEAT: SEARCH for the whole website (https://mui.com/material-ui/react-app-bar/)
+FEAT: SEARCH for the admin
 ---------------------------------------
 Medium Priority
-FEAT: SEARCH for the whole website
-FEAT: SEARCH for the admin
 ---------------------------------------
 Low Priority
