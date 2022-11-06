@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import clsx from "clsx";
 import axios from "utils/axios";
 
+import Tooltip from "@mui/material/Tooltip";
+
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
@@ -15,6 +17,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import UserInfo from "../UserInfo";
 import PostSkeleton from "./PostSkeleton";
 
+import { useAppSelector } from "app/hooks";
+
+import { selectIsAuth } from "features/auth/authSlice";
+
 import IPost from "types/Post.interface";
 
 import styles from "./Post.module.scss";
@@ -22,6 +28,7 @@ import styles from "./Post.module.scss";
 const Post: FC<IPost> = forwardRef(
   (
     {
+      isAuth,
       title,
       slug,
       createdAt,
@@ -49,21 +56,21 @@ const Post: FC<IPost> = forwardRef(
       await axios
         .delete(`/posts/${slug}`)
         .then(() => deleteCallback?.())
-        .catch((err: Error) => console.log(err));
+        .catch((err: Error) => console.warn(err));
     };
 
     const like = async () => {
       await axios
         .put(`/posts/${slug}/like`)
         .then(() => likesCallback?.())
-        .catch((err: Error) => console.log(err));
+        .catch((err: Error) => console.warn(err));
     };
 
     const unlike = async () => {
       await axios
         .put(`/posts/${slug}/unlike`)
         .then(() => likesCallback?.())
-        .catch((err: Error) => console.log(err));
+        .catch((err: Error) => console.warn(err));
     };
 
     return (
@@ -154,21 +161,49 @@ const Post: FC<IPost> = forwardRef(
               </li>
               <li>
                 {isFullPost ? (
-                  <button
-                    onClick={isLiked ? unlike : like}
-                    style={{
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {isLiked ? (
-                      <FavoriteIcon htmlColor="red" />
-                    ) : (
-                      <FavoriteBorderIcon />
-                    )}
-                    <span>{likesCount}</span>
-                  </button>
+                  !isAuth ? (
+                    <Tooltip
+                      title={
+                        <Link to="/login" style={{ color: "white" }}>
+                          Please log in
+                        </Link>
+                      }
+                      placement="top"
+                      arrow
+                    >
+                      <button
+                        onClick={isLiked ? unlike : like}
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {isLiked ? (
+                          <FavoriteIcon htmlColor="red" />
+                        ) : (
+                          <FavoriteBorderIcon />
+                        )}
+                        <span>{likesCount}</span>
+                      </button>
+                    </Tooltip>
+                  ) : (
+                    <button
+                      onClick={isLiked ? unlike : like}
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {isLiked ? (
+                        <FavoriteIcon htmlColor="red" />
+                      ) : (
+                        <FavoriteBorderIcon />
+                      )}
+                      <span>{likesCount}</span>
+                    </button>
+                  )
                 ) : (
                   <Link
                     to={`/posts/${slug}`}

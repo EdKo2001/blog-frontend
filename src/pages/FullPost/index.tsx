@@ -26,6 +26,7 @@ const FullPost: FC<IPost> = () => {
   const [commentsCallback, setCommentsCallback] = useState(true);
   const [likesCallback, setLikesCallback] = useState(true);
   const { slug } = useParams();
+
   const isAuth = useAppSelector(selectIsAuth);
   const userData = useAppSelector((state) => state.auth.data);
 
@@ -38,7 +39,6 @@ const FullPost: FC<IPost> = () => {
       })
       .catch((err: Error) => {
         console.warn(err);
-        alert("Ошибка при получении статьи");
       });
   }, []);
 
@@ -51,7 +51,6 @@ const FullPost: FC<IPost> = () => {
       })
       .catch((err: Error) => {
         console.warn(err);
-        alert("Ошибка при получении Комментарий");
       });
   }, [commentsCallback]);
 
@@ -63,13 +62,14 @@ const FullPost: FC<IPost> = () => {
       })
       .catch((err: Error) => {
         console.warn(err);
-        alert("Ошибка при получении Лайков");
       });
   }, [likesCallback]);
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />;
   }
+
+  console.log(likes, userData);
 
   return (
     <>
@@ -90,6 +90,7 @@ const FullPost: FC<IPost> = () => {
         isLiked={likes.some((like: any) => like.user === userData?._id)}
         likesCallback={() => setLikesCallback((prevState) => !prevState)}
         tags={data?.tags}
+        isAuth={isAuth}
         isFullPost
       >
         <ReactMarkdown children={data?.text} className={styles.reactMarkDown} />

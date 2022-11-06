@@ -21,7 +21,7 @@ const TagsBlock: FC<ITagsBlock> = memo(({ tags, isLoading = true }) => {
           <ListItem disablePadding>
             <Link
               to={`/tag/${name}`}
-              style={{ textDecoration: "none", color: "black" }}
+              style={{ textDecoration: "none", color: "black", width: "100%" }}
               key={i}
             >
               <ListItemButton>

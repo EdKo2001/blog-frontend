@@ -5,9 +5,6 @@ FEAT: Optimization {
 }
 FEAT: Adaptation (remains navigation)
 
-FIX: Latest Post
-FIX: Likes
-
 FEAT: my account
 ---------------------------------------
 Medium Priority

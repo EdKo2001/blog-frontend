@@ -96,12 +96,20 @@ $blue: #4361ee;
 
 .postDetails {
   display: flex;
+  align-items: center;
   list-style: none;
   padding: 0;
   margin: 20px 0 0 0;
 
   li {
+    display: inline-flex;
+    align-items: center;
     margin-right: 20px;
+
+    button {
+      display: inline-flex;
+      align-items: flex-end;
+    }
 
     a {
       display: inline-flex;

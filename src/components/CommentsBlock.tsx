@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 import moment from "moment";
 
 import ListItem from "@mui/material/ListItem";
@@ -20,9 +20,14 @@ const CommentsBlock: FC<ICommentsBlock> = ({
 }) => {
   return (
     <SideBlock title="Comments">
+      {items.length === 0 && (
+        <span style={{ display: "block", padding: "15px 0 0 15px" }}>
+          No Comments
+        </span>
+      )}
       <List>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={`comment${index}`}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 {isLoading ? (
@@ -53,7 +58,7 @@ const CommentsBlock: FC<ICommentsBlock> = ({
             {items.length - 1 !== index && (
               <Divider variant="inset" component="li" />
             )}
-          </React.Fragment>
+          </Fragment>
         ))}
       </List>
       {children}

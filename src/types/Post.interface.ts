@@ -19,6 +19,7 @@ interface IPost {
   isLoading?: boolean;
   isEditable?: boolean;
   ref?: any;
+  isAuth?: boolean;
 }
 
 export default IPost;
