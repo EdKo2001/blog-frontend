@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-import axios from "../utils/axios";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
 
-import Post from "components/Post";
 import TagsBlock from "components/TagsBlock";
 import SEO from "components/SEO";
 
@@ -15,128 +12,100 @@ import { fetchTags } from "features/tags/tagsSlice";
 
 import { useAppSelector, useThunkDispatch } from "app/hooks";
 
-import useMediaQuery from "../hooks/useMediaQuery";
-import useFirstRender from "hooks/useFirstRender";
-
-import IPost from "types/Post.interface";
+import { useMediaQuery, usePosts } from "../hooks";
 
 const Home = () => {
   const { slug } = useParams();
 
   const dispatch = useThunkDispatch();
-  const userData = useAppSelector((state) => state.auth.data);
+
   const { tags } = useAppSelector((state) => state.tags);
 
-  const [postsData, setPostsData] = useState([]);
-  const [posts, setPosts] = useState<IPost[]>([]);
-  const [isPostsLoading, setPostsLoading] = useState(true);
-  const [deleteCallback, setDeleteCallback] = useState(true);
+  const { postsLayout, setPosts } = usePosts("");
+
   const [pageTitle, setPageTitle] = useState("Latest Posts");
-  const [pageNumber, setPageNumber] = useState(1);
+
   const [tabIndex, setTabIndex] = useState(0);
 
   const isTablet = useMediaQuery("(min-width: 800px)");
 
-  const limit = 4;
-  const firstRender = useFirstRender();
-
   const isTagsLoading = tags.status === "loading";
 
   const handleTabChange = (e: any, newTabIndex: number) => {
-    setPageNumber(1);
     setPageTitle(e.target.textContent + " Posts");
     setTabIndex(newTabIndex);
   };
 
   useEffect(() => {
-    setPageNumber(1);
     setPageTitle(slug ? `Posts with #${slug}` : "Latest Posts");
   }, [slug]);
 
   useEffect(() => {
-    setPostsData([]);
-    setPosts([]);
-  }, [slug, tabIndex]);
-
-  useEffect(() => {
-    const getPosts = async (options: string) => {
-      setPostsLoading(true);
-      try {
-        const result = await axios.get(`/posts?${options}`);
-        setPostsData(result.data);
-        setPosts((prevPosts) => prevPosts.concat(result.data.results));
-      } catch (err) {
-        console.warn(err);
-      } finally {
-        setPostsLoading(false);
-      }
-    };
-
     if (slug) {
-      getPosts(`tag=${slug}&page=${pageNumber}&limit=${limit}`);
+      setPosts(`tag=${slug}`);
     } else {
       if (tabIndex === 1) {
-        getPosts(`popular&page=${pageNumber}&limit=${limit}`);
+        setPosts("popular");
       } else if (tabIndex === 2) {
-        getPosts(`relevant&page=${pageNumber}&limit=${limit}`);
+        setPosts("relevant");
       } else {
-        getPosts(`page=${pageNumber}&limit=${limit}`);
+        setPosts("");
       }
     }
-  }, [tabIndex, slug, pageNumber]);
+  }, [tabIndex, slug]);
 
-  useEffect(() => {
-    if (!firstRender) {
-      const getPosts = async (options?: string) => {
-        setPostsLoading(true);
-        try {
-          const result = await axios.get(
-            `/posts${options ? "/" + options : ""}`
-          );
-          setPostsData(result.data);
-          setPosts((prevPosts) => prevPosts.concat(result.data.results));
-        } catch (err) {
-          console.warn(err);
-        } finally {
-          setPostsLoading(false);
-        }
-      };
+  // useEffect(() => {
+  //   if (!firstRender) {
+  //     const getPosts = async (options?: string) => {
+  //       setPostsLoading(true);
+  //       try {
+  //         const result = await axios.get(
+  //           `/posts${options ? "/" + options : ""}`
+  //         );
+  //         setPostsData(result.data);
+  //         setPosts((prevPosts) => prevPosts.concat(result.data.results));
+  //       } catch (err) {
+  //         console.warn(err);
+  //       } finally {
+  //         setPostsLoading(false);
+  //       }
+  //     };
 
-      if (slug) {
-        getPosts(`tag=${slug}`);
-      } else {
-        if (tabIndex === 1) {
-          getPosts(`popular`);
-        } else if (tabIndex === 2) {
-          getPosts(`relevant`);
-        } else {
-          getPosts();
-        }
-      }
-    }
-  }, [deleteCallback]);
+  //     if (slug) {
+  //       getPosts(`tag=${slug}`);
+  //     } else {
+  //       if (tabIndex === 1) {
+  //         getPosts(`popular`);
+  //       } else if (tabIndex === 2) {
+  //         getPosts(`relevant`);
+  //       } else {
+  //         getPosts();
+  //       }
+  //     }
+  //   }
+  // }, [deleteCallback]);
 
   useEffect(() => {
     dispatch(fetchTags());
   }, []);
 
-  const observer: any = useRef();
-  const lastPostRef = useCallback(
-    (node: any) => {
-      if (isPostsLoading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        //@ts-ignore
-        if (entries[0].isIntersecting && postsData.next) {
-          console.log("we are here");
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    //@ts-ignore
-    [isPostsLoading, postsData.next]
-  );
+  // const observer: any = useRef();
+  // const lastPostRef = useCallback(
+  //   (node: any) => {
+  //     if (isPostsLoading) return;
+  //     if (observer.current) observer.current.disconnect();
+  //     observer.current = new IntersectionObserver((entries) => {
+  //       //@ts-ignore
+  //       if (entries[0].isIntersecting && postsData.next) {
+  //         console.log("we are here");
+  //         setPageNumber((prevPageNumber) => prevPageNumber + 1);
+  //       }
+  //     });
+  //     if (node) observer.current.observe(node);
+  //   },
+  //   //@ts-ignore
+  //   [isPostsLoading, postsData.next]
+  // );
 
   return (
     <>
@@ -164,7 +133,8 @@ const Home = () => {
         </Tabs>
       )}
       <Grid container spacing={4}>
-        {isPostsLoading && posts.length === 0 ? (
+        {postsLayout}
+        {/* {isPostsLoading && posts.length === 0 ? (
           <Grid md={8} xs={12} item>
             {[...Array(limit)].map((_, idx) => (
               <Post key={idx} isLoading />
@@ -231,7 +201,7 @@ const Home = () => {
             {isPostsLoading &&
               [...Array(limit)].map((_, idx) => <Post key={idx} isLoading />)}
           </Grid>
-        )}
+        )} */}
         <Grid md={4} xs={12} item>
           {isTablet && (
             <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
