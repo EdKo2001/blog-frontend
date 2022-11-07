@@ -46,7 +46,7 @@ const Index = ({ slug, callback }: { slug: string; callback: () => void }) => {
     }
     try {
       await axios
-        .post(`/posts/${slug}/comments`, { text, captchaToken })
+        .put(`/posts/${slug}/comments`, { text, captchaToken })
         .then((res: any) => {
           reset();
           callback();

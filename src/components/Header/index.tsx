@@ -31,11 +31,12 @@ const Header = () => {
   };
 
   const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    (open: boolean) => (e: React.KeyboardEvent | React.MouseEvent) => {
       if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        e &&
+        e.type === "keydown" &&
+        ((e as React.KeyboardEvent).key === "Tab" ||
+          (e as React.KeyboardEvent).key === "Shift")
       ) {
         return;
       }
@@ -72,9 +73,6 @@ const Header = () => {
                   )}
                   <Link to="/favorites">
                     <Button variant="text">Favorites</Button>
-                  </Link>
-                  <Link to="/my-account">
-                    <Button variant="text">My Account</Button>
                   </Link>
                   <Button
                     onClick={onClickLogout}
@@ -122,29 +120,28 @@ const Header = () => {
                   {isAuth ? (
                     <>
                       {userData?.role === "admin" && (
-                        <Link to="/admin">
+                        <Link to="/admin" onClick={toggleDrawer(false)}>
                           <Button variant="text">Admin</Button>
                         </Link>
                       )}
                       {(userData?.role === "author" ||
                         userData?.role === "admin") && (
                         <>
-                          <Link to="/my-posts">
+                          <Link to="/my-posts" onClick={toggleDrawer(false)}>
                             <Button variant="text">My Articles</Button>
                           </Link>
-                          <Link to="/add-post">
+                          <Link to="/add-post" onClick={toggleDrawer(false)}>
                             <Button variant="text">Write an article</Button>
                           </Link>
                         </>
                       )}
-                      <Link to="/favorites">
+                      <Link to="/favorites" onClick={toggleDrawer(false)}>
                         <Button variant="text">Favorites</Button>
                       </Link>
-                      <Link to="/my-account">
-                        <Button variant="text">My Account</Button>
-                      </Link>
                       <Button
-                        onClick={onClickLogout}
+                        onClick={(e) => (
+                          toggleDrawer(false)(e), onClickLogout()
+                        )}
                         variant="contained"
                         color="error"
                       >
@@ -153,10 +150,10 @@ const Header = () => {
                     </>
                   ) : (
                     <>
-                      <Link to="/login">
+                      <Link to="/login" onClick={toggleDrawer(false)}>
                         <Button variant="outlined">Sign In</Button>
                       </Link>
-                      <Link to="/register">
+                      <Link to="/register" onClick={toggleDrawer(false)}>
                         <Button variant="contained">Create an account</Button>
                       </Link>
                     </>

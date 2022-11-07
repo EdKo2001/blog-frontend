@@ -17,8 +17,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "typeRoots": ["node_modules/@types", "src/types"], 
-    "baseUrl": "./src",
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "baseUrl": "./src"
     // "paths": {
     //   "@components/*": ["components/*"],
     //   "@pages/*": ["pages/*"],
@@ -31,5 +31,5 @@
     // },
   },
   "include": ["./src"],
-  "exclude": ["./node_modules", "./build"],  
+  "exclude": ["./node_modules", "./build"]
 }

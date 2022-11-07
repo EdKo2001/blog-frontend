@@ -1,7 +1,4 @@
 High Priority
-FEAT: Optimization {
-    Code Refactoring: getting posts
-}
 FIX: Posts Thumbnail
 FEAT: SEARCH for the whole website (https://mui.com/material-ui/react-app-bar/)
 FEAT: SEARCH for the admin

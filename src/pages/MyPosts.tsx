@@ -10,6 +10,7 @@ const MyPosts = () => {
   return (
     <div>
       <SEO title="My Articles" />
+      <h1>My Articles</h1>
       {postsLayout}
     </div>
   );

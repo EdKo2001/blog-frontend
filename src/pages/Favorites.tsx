@@ -10,6 +10,7 @@ const Favorites = () => {
   return (
     <div>
       <SEO title="Favorites" />
+      <h1>Favorites</h1>
       {postsLayout}
     </div>
   );

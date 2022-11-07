@@ -95,13 +95,24 @@ const Post: FC<IPost> = forwardRef(
             </IconButton>
           </div>
         )}
-        {imageUrl && (
-          <img
-            className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-            src={imageUrl}
-            alt={title}
-          />
-        )}
+        {imageUrl &&
+          (isFullPost ? (
+            <img
+              className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+              src={imageUrl}
+              alt={title}
+            />
+          ) : (
+            <Link to={`/posts/${slug}`}>
+              <img
+                className={clsx(styles.image, {
+                  [styles.imageFull]: isFullPost,
+                })}
+                src={imageUrl}
+                alt={title}
+              />
+            </Link>
+          ))}
         <div className={styles.wrapper}>
           <UserInfo {...user} postedOn={createdAt!} />
           <div className={styles.indention}>
