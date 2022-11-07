@@ -33,6 +33,8 @@ const usePosts = (options: string, limit = 10) => {
     });
   }, []);
 
+  console.log("urlParameters", urlParameters);
+
   const getPosts = async () => {
     setPostsLoading(true);
     try {

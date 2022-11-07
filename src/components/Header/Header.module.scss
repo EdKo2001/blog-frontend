@@ -1,5 +1,5 @@
 .root {
-  background-color: #fff;
+  background: #fff;
   padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 30px;
@@ -7,22 +7,20 @@
 
 .inner {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
 .logo {
-  background-color: black;
-  color: #fff;
-  font-weight: 700;
-  line-height: 35px;
-  text-transform: uppercase;
-  letter-spacing: 0.15px;
-  border-radius: 5px;
-  padding: 0 10px;
-  text-decoration: none;
-
+  transition: all 0.1s ease-in-out;
+  max-width: 64px;
   &:hover {
-    background-color: #4361ee;
+    transform: scale(1.05);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 

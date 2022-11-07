@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { Drawer, IconButton } from "@mui/material";
+
+import PostsSearch from "components/PostsSearch";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,6 +22,8 @@ const Header = () => {
   const dispatch = useThunkDispatch();
   const isAuth = useAppSelector(selectIsAuth);
   const userData = useAppSelector((state) => state.auth.data);
+
+  const [searchParams] = useSearchParams();
 
   const [isMobNavOpen, setMobNavOpen] = useState(false);
 
@@ -48,9 +52,15 @@ const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <Link className={styles.logo} to="/">
-            EDUARD'S BLOG
-          </Link>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Link className={styles.logo} to="/">
+              <img src="/logo.png" />
+            </Link>
+            <PostsSearch
+              style={{ margin: "0 15px 0 20px" }}
+              value={searchParams.get("s") ?? ""}
+            />
+          </div>
           {isTablet ? (
             <div className={styles.buttons}>
               {isAuth ? (

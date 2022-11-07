@@ -21,6 +21,7 @@ const Login = lazy(() => import("./pages/Login"));
 const MyPosts = lazy(() => import("./pages/MyPosts"));
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Admin = lazy(() => import("./pages/Admin"));
+const SearchResults = lazy(() => import("./pages/SearchResults"));
 
 const App = () => {
   const dispatch = useThunkDispatch();
@@ -62,6 +63,14 @@ const App = () => {
             element={
               <Suspense>
                 <FullPost />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <Suspense>
+                <SearchResults />
               </Suspense>
             }
           />
