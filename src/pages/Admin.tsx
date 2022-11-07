@@ -16,10 +16,14 @@ const Admin = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          marginBottom: 30,
         }}
       >
-        <h1>All Posts</h1>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <h1 style={{ marginBottom: 0 }}>All Posts</h1>
+        <div
+          style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
+        >
           <p>Search posts by title</p>
           <Search
             cb={(searchValue) =>

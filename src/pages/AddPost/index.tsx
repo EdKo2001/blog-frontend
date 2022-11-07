@@ -151,6 +151,7 @@ const AddPost = () => {
             variant="contained"
             color="error"
             onClick={onClickRemoveImage}
+            style={{ marginLeft: 15 }}
           >
             Delete
           </Button>
@@ -158,6 +159,7 @@ const AddPost = () => {
             className={styles.image}
             src={`${process.env.REACT_APP_BACKEND_URL}${imageUrl}`}
             alt="Uploaded"
+            style={{ marginTop: 15 }}
           />
         </>
       )}
