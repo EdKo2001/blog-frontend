@@ -63,7 +63,7 @@ const Header = () => {
   };
 
   return (
-    <div className={styles.root}>
+    <header className={styles.header}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -149,9 +149,14 @@ const Header = () => {
                   {isAuth ? (
                     <>
                       {userData?.role === "admin" && (
-                        <Link to="/admin" onClick={toggleDrawer(false)}>
-                          <Button variant="text">Admin</Button>
-                        </Link>
+                        <>
+                          <Link to="/admin" onClick={toggleDrawer(false)}>
+                            <Button variant="text">Admin</Button>
+                          </Link>
+                          <Button variant="text" onClick={importPosts}>
+                            Import Posts
+                          </Button>
+                        </>
                       )}
                       {(userData?.role === "author" ||
                         userData?.role === "admin") && (
@@ -193,7 +198,7 @@ const Header = () => {
           )}
         </div>
       </Container>
-    </div>
+    </header>
   );
 };
 
