@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
 
 import axios from "utils/axios";
 
@@ -11,6 +10,7 @@ import CommentsBlock from "components/CommentsBlock";
 import SEO from "components/SEO";
 
 import { useAppSelector } from "app/hooks";
+
 import { selectIsAuth } from "features/auth/authSlice";
 
 import IPost from "types/Post.interface";
@@ -91,7 +91,10 @@ const FullPost: FC<IPost> = () => {
         isAuth={isAuth}
         isFullPost
       >
-        <ReactMarkdown children={data?.text} className={styles.reactMarkDown} />
+        <div
+          dangerouslySetInnerHTML={{ __html: data?.text }}
+          className={styles.reactMarkDown}
+        />
       </Post>
       <CommentsBlock items={comments} isLoading={isCommentsLoading}>
         {isAuth && (

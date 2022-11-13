@@ -2,6 +2,7 @@ interface IPost {
   id?: number;
   title?: string;
   slug?: string;
+  excerpt?: string;
   createdAt?: string;
   imageUrl?: string;
   user?: { _id: number };

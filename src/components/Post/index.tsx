@@ -31,6 +31,7 @@ const Post: FC<IPost> = forwardRef(
       isAuth,
       title,
       slug,
+      excerpt,
       createdAt,
       imageUrl,
       user,
@@ -121,6 +122,12 @@ const Post: FC<IPost> = forwardRef(
             >
               {isFullPost ? title : <Link to={`/posts/${slug}`}>{title}</Link>}
             </h2>
+            {excerpt && (
+              <div
+                dangerouslySetInnerHTML={{ __html: excerpt }}
+                style={{ marginTop: 15 }}
+              />
+            )}
             {tags && tags.length > 0 && (
               <ul className={styles.tags}>
                 {tags.map((name) => (

@@ -108,6 +108,7 @@ const usePosts = (options: string, limit = 10) => {
                       ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
                       : ""
                   }
+                  excerpt={obj.excerpt}
                   user={obj.user}
                   createdAt={obj.createdAt}
                   viewsCount={obj.viewsCount}
@@ -133,6 +134,7 @@ const usePosts = (options: string, limit = 10) => {
                       ? `${process.env.REACT_APP_BACKEND_URL}${obj.imageUrl}`
                       : ""
                   }
+                  excerpt={obj.excerpt}
                   user={obj.user}
                   createdAt={obj.createdAt}
                   viewsCount={obj.viewsCount}

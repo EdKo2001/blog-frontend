@@ -25,6 +25,12 @@ const PostSkeleton = () => {
           </div>
           <div className={styles.skeletonInfo}>
             <Skeleton variant="text" width="80%" height={45} />
+            <Skeleton
+              variant="text"
+              width="100%"
+              height={72}
+              style={{ marginTop: 15 }}
+            />
             <div className={styles.skeletonTags}>
               <Skeleton variant="text" width={40} height={30} />
               <Skeleton variant="text" width={40} height={30} />
