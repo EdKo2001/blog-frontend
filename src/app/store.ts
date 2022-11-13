@@ -11,7 +11,8 @@ import { authReducer } from "features/auth/authSlice";
 
 const store = configureStore({
   reducer: { auth: authReducer, tags: tagsReducer },
-  middleware: [thunk, logger],
+  middleware:
+    process.env.NODE_ENV === "development" ? [thunk, logger] : [thunk],
 });
 
 export default store;
