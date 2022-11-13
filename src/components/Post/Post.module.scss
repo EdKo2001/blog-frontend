@@ -51,13 +51,10 @@ $blue: #4361ee;
   }
 }
 
-.indention {
-  padding-left: 40px;
-}
-
 .title {
   font-size: 28px;
-  margin: 0;
+  line-height: 1.2;
+  margin: 10px 0 0;
 
   a {
     text-decoration: none;
@@ -71,6 +68,13 @@ $blue: #4361ee;
   &Full {
     font-size: 42px;
     font-weight: 900;
+  }
+}
+
+.excerpt {
+  margin: 5px 0 10px;
+  & > * {
+    margin: 0;
   }
 }
 
@@ -170,4 +174,10 @@ $blue: #4361ee;
   border-radius: 10px;
   opacity: 0;
   transition: all 0.15s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .indention {
+    padding: 0 40px;
+  }
 }

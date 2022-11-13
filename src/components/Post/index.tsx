@@ -125,7 +125,7 @@ const Post: FC<IPost> = forwardRef(
             {excerpt && (
               <div
                 dangerouslySetInnerHTML={{ __html: excerpt }}
-                style={{ marginTop: 15 }}
+                className={styles.excerpt}
               />
             )}
             {tags && tags.length > 0 && (
