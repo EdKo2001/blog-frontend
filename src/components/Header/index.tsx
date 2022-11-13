@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+
+import axios from "utils/axios";
 
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -24,6 +26,7 @@ const Header = () => {
   const userData = useAppSelector((state) => state.auth.data);
 
   const [searchParams] = useSearchParams();
+  const nagivate = useNavigate();
 
   const [isMobNavOpen, setMobNavOpen] = useState(false);
 
@@ -48,6 +51,17 @@ const Header = () => {
       setMobNavOpen(open);
     };
 
+  const importPosts = async () => {
+    await axios
+      .post("/scrape/posts")
+      .then(
+        (res: { data: { posts?: any[]; message?: string } }) => (
+          alert(res?.data?.message), nagivate(0)
+        )
+      )
+      .catch((err: Error) => console.warn(err));
+  };
+
   return (
     <div className={styles.root}>
       <Container maxWidth="lg">
@@ -66,9 +80,14 @@ const Header = () => {
               {isAuth ? (
                 <>
                   {userData?.role === "admin" && (
-                    <Link to="/admin">
-                      <Button variant="text">Admin</Button>
-                    </Link>
+                    <>
+                      <Link to="/admin">
+                        <Button variant="text">Admin</Button>
+                      </Link>
+                      <Button variant="text" onClick={importPosts}>
+                        Import Posts
+                      </Button>
+                    </>
                   )}
                   {(userData?.role === "author" ||
                     userData?.role === "admin") && (
