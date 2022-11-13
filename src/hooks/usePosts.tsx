@@ -33,12 +33,14 @@ const usePosts = (options: string, limit = 10) => {
     });
   }, []);
 
-  const getPosts = async () => {
+  const getPosts = async (reset?: boolean) => {
     setPostsLoading(true);
     try {
       const result = await axios.get(`/posts?${urlParameters}`);
       setPostsData(result.data);
-      setPostsArray((prevPosts) => prevPosts.concat(result.data.results));
+      reset
+        ? setPostsArray((prevPosts) => result.data.results)
+        : setPostsArray((prevPosts) => prevPosts.concat(result.data.results));
     } catch (err) {
       console.warn(err);
     } finally {
@@ -57,7 +59,7 @@ const usePosts = (options: string, limit = 10) => {
 
   useEffect(() => {
     if (!firstRender) {
-      getPosts();
+      getPosts(true);
     }
   }, [deleteCallback]);
 
