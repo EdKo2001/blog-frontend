@@ -89,11 +89,6 @@ const Home = () => {
           {isTablet && (
             <TagsBlock tags={tags.items.results} isLoading={isTagsLoading} />
           )}
-          <img
-            src="/banner.jpg"
-            alt="your banner"
-            style={{ maxWidth: "100%" }}
-          />
         </Grid>
       </Grid>
     </>
