@@ -153,7 +153,12 @@ const Header = () => {
                           <Link to="/admin" onClick={toggleDrawer(false)}>
                             <Button variant="text">Admin</Button>
                           </Link>
-                          <Button variant="text" onClick={importPosts}>
+                          <Button
+                            variant="text"
+                            onClick={(e) => (
+                              toggleDrawer(false)(e), importPosts()
+                            )}
+                          >
                             Import Posts
                           </Button>
                         </>

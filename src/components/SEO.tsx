@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 
 const SEO = ({
   title = "Eduard's Blog",
-  description = "Built with the use of MERN stack.",
+  description = "Built with the use of MERN stack",
 }: {
   title?: string;
   description?: string;
