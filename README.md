@@ -11,8 +11,6 @@
 
 ## Mission
 
-Implemented the existed library https://ukrbublik.github.io/react-awesome-query-builder/
-However, in this project it is more user friendly, as long as **Groups** are interchangeable.
 
 **[Demo](https://mern-blog-frontend.onrender.com/)**
 
