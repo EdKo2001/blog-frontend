@@ -77,7 +77,7 @@ const Index = ({ slug, callback }: { slug: string; callback: () => void }) => {
           <ReCAPTCHA
             sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY!}
             onChange={(value: string) => (
-              console.log(value), setCaptchaToken(value), setCaptchaError(false)
+              setCaptchaToken(value), setCaptchaError(false)
             )}
             className={styles.captcha}
           />
