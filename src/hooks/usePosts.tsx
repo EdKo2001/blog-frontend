@@ -4,7 +4,7 @@ import axios from "../utils/axios";
 
 import Grid from "@mui/material/Grid";
 
-import Post from "components/Post";
+import Post from "../components/Post";
 
 import useFirstRender from "hooks/useFirstRender";
 

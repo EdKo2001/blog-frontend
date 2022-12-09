@@ -19,16 +19,6 @@
     "esModuleInterop": true,
     "typeRoots": ["node_modules/@types", "src/types"],
     "baseUrl": "./src"
-    // "paths": {
-    //   "@components/*": ["components/*"],
-    //   "@pages/*": ["pages/*"],
-    //   "@app/*": ["app/*"],
-    //   "@features/*": ["features/*"],
-    //   "@hooks/*": ["hooks/*"],
-    //   "@utils/*": ["utils/*"],
-    //   "@types/*": ["types/*"],
-    //   "@styles/*": ["styles/*"],
-    // },
   },
   "include": ["./src"],
   "exclude": ["./node_modules", "./build"]
