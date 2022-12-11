@@ -6,7 +6,7 @@ export const fetchTags = createAsyncThunk(
   "posts/fetchTags",
   async (_, thunkAPI: any) => {
     try {
-      const { data } = await axios.get("/posts/tags?page=1&limit=10");
+      const { data } = await axios.get("/posts/tags");
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

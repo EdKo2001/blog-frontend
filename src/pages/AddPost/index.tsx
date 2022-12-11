@@ -30,7 +30,7 @@ const AddPost = () => {
 
   const authData = useAppSelector((state) => state.auth?.data);
 
-  const [text, setText] = useState("");
+  const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -64,7 +64,7 @@ const AddPost = () => {
   };
 
   const onChange = useCallback((value: any) => {
-    setText(value);
+    setContent(value);
   }, []);
 
   const onSubmit = async (status?: string) => {
@@ -73,7 +73,7 @@ const AddPost = () => {
         title,
         imageUrl,
         tags,
-        text,
+        content,
         status,
       };
 
@@ -103,7 +103,7 @@ const AddPost = () => {
             return navigate("/my-posts");
           }
           setTitle(data.title);
-          setText(data.text);
+          setContent(data.content);
           setImageUrl(data.imageUrl);
           setTags(data.tags.join(","));
           setStatus(data.status);
@@ -189,7 +189,7 @@ const AddPost = () => {
       />
       <SimpleMDE
         className={styles.editor}
-        value={text}
+        value={content}
         onChange={onChange}
         options={options}
       />
