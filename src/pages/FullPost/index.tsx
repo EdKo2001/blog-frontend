@@ -71,7 +71,7 @@ const FullPost: FC<IPost> = () => {
 
   return (
     <>
-      <SEO title={data?.title} description={data?.text.substring(0, 150)} />
+      <SEO title={data?.title} description={data?.content.substring(0, 150)} />
       <Post
         title={data?.title}
         slug={data.slug}
@@ -92,7 +92,7 @@ const FullPost: FC<IPost> = () => {
         isFullPost
       >
         <div
-          dangerouslySetInnerHTML={{ __html: data?.text }}
+          dangerouslySetInnerHTML={{ __html: data?.content }}
           className={styles.reactMarkDown}
         />
       </Post>
