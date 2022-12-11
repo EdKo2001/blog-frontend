@@ -74,7 +74,6 @@ const Post: FC<IPost> = forwardRef(
         .catch((err: Error) => console.warn(err));
     };
 
-    
     return (
       <div
         className={clsx(styles.root, { [styles.rootFull]: isFullPost })}
@@ -102,7 +101,7 @@ const Post: FC<IPost> = forwardRef(
             <img
               className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
               src={imageUrl}
-              alt={title}
+              alt={title?.replace(/&nbsp;/g, " ")}
             />
           ) : (
             <Link to={`/posts/${slug}`}>
@@ -111,7 +110,7 @@ const Post: FC<IPost> = forwardRef(
                   [styles.imageFull]: isFullPost,
                 })}
                 src={imageUrl}
-                alt={title}
+                alt={title?.replace(/&nbsp;/g, " ")}
               />
             </Link>
           ))}
@@ -121,7 +120,13 @@ const Post: FC<IPost> = forwardRef(
             <h2
               className={clsx(styles.title, { [styles.titleFull]: isFullPost })}
             >
-              {isFullPost ? title : <Link to={`/posts/${slug}`}>{title}</Link>}
+              {isFullPost ? (
+                title?.replace(/&nbsp;/g, " ")
+              ) : (
+                <Link to={`/posts/${slug}`}>
+                  {title?.replace(/&nbsp;/g, " ")}
+                </Link>
+              )}
             </h2>
             {excerpt && (
               <div
