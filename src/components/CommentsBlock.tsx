@@ -45,8 +45,8 @@ const CommentsBlock: FC<ICommentsBlock> = ({
                 <ListItemText
                   primary={
                     <>
-                      {obj.user?.fullName}{" "}
-                      <span style={{ fontSize: 11 }}>
+                      {obj.user?.fullName}
+                      <span style={{ fontSize: 11, marginLeft: 5 }}>
                         {moment(obj.createAt).format("MMM D YYYY")}
                       </span>
                     </>
