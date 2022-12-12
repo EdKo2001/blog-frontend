@@ -1,10 +1,12 @@
+
 <h1 align="center">MERN BLOG FRONTEND</h1>
 
 <p align="center">
-    <img align="center" src="https://s9.gifyu.com/images/mern-blog-frontend.gif">
+    <img align="center" src="https://user-images.githubusercontent.com/53624093/207122796-61a60ebc-6f85-4594-9746-8a6b89d1c647.gif">
 </p>
-  
-## Stack
+
+## Stack!
+
 
 - React
 - TypeScript
