@@ -1,4 +1,9 @@
+<h1 align="center">MERN BLOG FRONTEND</h1>
 
+<p align="center">
+    <img align="center" src="https://s9.gifyu.com/images/mern-blog-frontend.gif">
+</p>
+  
 ## Stack
 
 - React
