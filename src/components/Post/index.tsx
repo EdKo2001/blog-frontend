@@ -17,10 +17,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import UserInfo from "../UserInfo";
 import PostSkeleton from "./PostSkeleton";
 
-import { useAppSelector } from "app/hooks";
-
-import { selectIsAuth } from "features/auth/authSlice";
-
 import IPost from "types/Post.interface";
 
 import styles from "./Post.module.scss";
