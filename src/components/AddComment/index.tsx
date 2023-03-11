@@ -74,13 +74,13 @@ const Index = ({ slug, callback }: { slug: string; callback: () => void }) => {
             multiline
             fullWidth
           />
-          <ReCAPTCHA
+          {/* <ReCAPTCHA
             sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY!}
             onChange={(value: string) => (
               setCaptchaToken(value), setCaptchaError(false)
             )}
             className={styles.captcha}
-          />
+          /> */}
           {captchaError && (
             <p style={{ color: "red", margin: 0 }}>Please solve the captcha</p>
           )}

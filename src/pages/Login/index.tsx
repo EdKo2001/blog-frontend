@@ -21,6 +21,8 @@ import {
 
 import styles from "./Login.module.scss";
 
+// const customTextField = TextField.prototype.
+
 const Login = () => {
   const isAuth = useAppSelector(selectIsAuth);
   const authErrors = useAppSelector(selectAuthErrors);
@@ -50,11 +52,11 @@ const Login = () => {
 
   return (
     <Paper classes={{ root: styles.root }}>
-      <SEO title="Sign In" />
+      {/* <SEO title="Sign In" /> */}
       <Typography classes={{ root: styles.title }} variant="h5">
         Sign In
       </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
         <TextField
           className={styles.field}
           label="Email"
@@ -64,6 +66,7 @@ const Login = () => {
           {...register("email", { required: "Email is required" })}
           fullWidth
           required
+          data-testid="email"
         />
         <TextField
           className={styles.field}
@@ -74,6 +77,7 @@ const Login = () => {
           {...register("password", { required: "Password is required" })}
           fullWidth
           required
+          data-testid="password"
         />
         <ErrorText text={authErrors?.message} style={{ textAlign: "center" }} />
         <Button type="submit" size="large" variant="contained" fullWidth>
