@@ -1,7 +1,7 @@
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
 import { createMemoryHistory, MemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 interface RenderWithRouterOptions {
   route?: string;

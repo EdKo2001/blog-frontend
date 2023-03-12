@@ -72,7 +72,6 @@ const authSlice = createSlice({
       state.status = "error";
       state.data = null;
       state.errors = payload;
-      console.log(payload);
     });
     builder.addCase(authLoginMe.pending, (state) => {
       state.status = "loading";

@@ -56,38 +56,37 @@ describe("LoginPage", () => {
     expect(passwordInput.value).toBe("password");
   });
 
-  // it("should submit login form and show User is not found", async () => {
-  //   const emailInput = screen
-  //     .getByTestId("email")
-  //     // eslint-disable-next-line testing-library/no-node-access
-  //     .querySelector("input") as HTMLInputElement;
-  //   const passwordInput = screen
-  //     .getByTestId("password")
-  //     // eslint-disable-next-line testing-library/no-node-access
-  //     .querySelector("input") as HTMLInputElement;
-  //   fireEvent.change(emailInput, { target: { value: "test@me.com" } });
-  //   fireEvent.change(passwordInput, { target: { value: "password" } });
-  //   fireEvent.submit(screen.getByTestId("login-form"));
-  //   await waitFor(() => expect(screen.getByText("User is not found")));
-  // });
+  it("should submit login form and show User is not found", async () => {
+    const emailInput = screen
+      .getByTestId("email")
+      // eslint-disable-next-line testing-library/no-node-access
+      .querySelector("input") as HTMLInputElement;
+    const passwordInput = screen
+      .getByTestId("password")
+      // eslint-disable-next-line testing-library/no-node-access
+      .querySelector("input") as HTMLInputElement;
+    fireEvent.change(emailInput, { target: { value: "test@me.com" } });
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    fireEvent.submit(screen.getByTestId("login-form"));
+    await waitFor(() => expect(screen.getByText("User is not found")));
+  });
 
-  // it("should submit login form and show Invalid login or password", async () => {
-  //   const emailInput = screen
-  //     .getByTestId("email")
-  //     // eslint-disable-next-line testing-library/no-node-access
-  //     .querySelector("input") as HTMLInputElement;
-  //   const passwordInput = screen
-  //     .getByTestId("password")
-  //     // eslint-disable-next-line testing-library/no-node-access
-  //     .querySelector("input") as HTMLInputElement;
-  //   fireEvent.change(emailInput, { target: { value: "test@test.com" } });
-  //   fireEvent.change(passwordInput, { target: { value: "password" } });
-  //   fireEvent.submit(screen.getByTestId("login-form"));
-  //   await waitFor(() => expect(screen.getByText("Invalid login or password")));
-  // });
+  it("should submit login form and show Invalid login or password", async () => {
+    const emailInput = screen
+      .getByTestId("email")
+      // eslint-disable-next-line testing-library/no-node-access
+      .querySelector("input") as HTMLInputElement;
+    const passwordInput = screen
+      .getByTestId("password")
+      // eslint-disable-next-line testing-library/no-node-access
+      .querySelector("input") as HTMLInputElement;
+    fireEvent.change(emailInput, { target: { value: "test@test.com" } });
+    fireEvent.change(passwordInput, { target: { value: "password" } });
+    fireEvent.submit(screen.getByTestId("login-form"));
+    await waitFor(() => expect(screen.getByText("Invalid login or password")));
+  });
 
   it("should submit login form and redirect to home page", async () => {
-    // console.log("history.location.pathname", history.location.pathname);
     const emailInput = screen
       .getByTestId("email")
       // eslint-disable-next-line testing-library/no-node-access
@@ -101,8 +100,11 @@ describe("LoginPage", () => {
     fireEvent.submit(screen.getByTestId("login-form"));
 
     await waitFor(() => {
-      console.log("history.location.pathname", history.location.pathname);
       // expect(history.location.pathname).toBe("/");
+      expect(
+        screen.queryByText("Invalid login or password")
+      ).not.toBeInTheDocument();
     });
+    expect(screen.queryByText("User is not found")).not.toBeInTheDocument();
   });
 });

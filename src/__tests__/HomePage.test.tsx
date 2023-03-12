@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import { render, screen } from "@testing-library/react";
 
-import axios from "../utils/axios";
+import axios from "utils/axios";
 
 import Post from "../components/Post";
 

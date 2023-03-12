@@ -18,7 +18,16 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "typeRoots": ["node_modules/@types", "src/types"],
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "app/*": ["app/*"],
+      "components/*": ["components/*"],
+      "feautres/*": ["feautres/*"],
+      "config/*": ["config/*"],
+      "utils/*": ["utils/*"],
+      "hooks/*": ["hooks/*"],
+      "types/*": ["types/*"]
+    }
   },
   "include": ["./src"],
   "exclude": ["./node_modules", "./build"]
