@@ -75,6 +75,7 @@ const Post: FC<IPost> = forwardRef(
         className={clsx(styles.root, { [styles.rootFull]: isFullPost })}
         //@ts-ignore
         ref={ref}
+        data-testid="post-card"
       >
         {isEditable && (
           <div className={styles.editButtons}>
