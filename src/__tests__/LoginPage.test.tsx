@@ -100,6 +100,7 @@ describe("LoginPage", () => {
     fireEvent.submit(screen.getByTestId("login-form"));
 
     await waitFor(() => {
+      // TODO: path does not change after successful authentication
       // expect(history.location.pathname).toBe("/");
       expect(
         screen.queryByText("Invalid login or password")

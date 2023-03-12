@@ -7,12 +7,12 @@ it("Checking post count increment functionality", () => {
     .first()
     .then((element) => {
       let postCountBeforeVisiting = parseInt(element.text(), 10);
-      let postSlug;
+      let postSlug = "";
       cy.get('[data-testid="post-card"] a')
         .first()
         .invoke("attr", "href")
         .then((href) => {
-          postSlug = href;
+          postSlug = href!;
         });
 
       cy.get('[data-testid="post-card"] a')
@@ -20,9 +20,9 @@ it("Checking post count increment functionality", () => {
         .click()
         .then(() => {
           cy.url().should("include", "/posts/");
-          // Cypress.env("REACT_APP_API_URL")
-          let url = "http://localhost:8888/api" + postSlug;
-          console.log("API URL:", url);
+
+          //@ts-ignore
+          let url = Cypress.config().apiUrl + postSlug;
 
           cy.intercept("GET", url).as("FullPost");
 

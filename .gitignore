@@ -9,5 +9,11 @@ package-lock.json
 .env
 dev.env
 
-notes.txt
+# Cypress #
+/cypress/videos
+/cypress/screenshots
+/cypress/fixtures
+/cypress/results
+
+
 
