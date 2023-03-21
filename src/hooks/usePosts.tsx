@@ -36,10 +36,12 @@ const usePosts = (options: string, limit = 10) => {
   const getPosts = async (reset?: boolean) => {
     setPostsLoading(true);
     try {
-      const result = await axios.get(`/posts?${urlParameters}`);
+      const result = await axios.get(
+        `/posts?${urlParameters}&page=${pageNumber}`
+      );
       setPostsData(result.data);
       reset
-        ? setPostsArray((prevPosts) => result.data.results)
+        ? setPostsArray(result.data.results)
         : setPostsArray((prevPosts) => prevPosts.concat(result.data.results));
     } catch (err) {
       console.warn(err);
@@ -71,7 +73,6 @@ const usePosts = (options: string, limit = 10) => {
       observer.current = new IntersectionObserver((entries) => {
         //@ts-ignore
         if (entries[0].isIntersecting && postsData.next) {
-          console.log("we are here");
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
       });
