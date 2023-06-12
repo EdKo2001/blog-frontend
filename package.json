@@ -11,7 +11,9 @@
     "local-cypress-test": "env-cmd -f dev.env npx cypress run",
     "cypress-test": "npx cypress run",
     "cypress": "env-cmd -f dev.env cypress open",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync build/ s3://react-blog-mern",
+    "prod": "npm run build && npm run deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
